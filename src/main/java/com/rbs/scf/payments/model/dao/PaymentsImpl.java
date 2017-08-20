@@ -521,14 +521,14 @@ public boolean addCustomer_to_Bank(Customer_to_Bank ctb) {
 public static void main(String[] args) throws ParseException {
 	PaymentsImpl p=new PaymentsImpl();
 	
-	//Map<String,String> m=new HashMap<String,String>();
-	//m.put("val1", "123");
-	//m.put("val2", "87");
-	//java.sql.Date sqlDate = java.sql.Date.valueOf("2017-11-11");
-	//Bank myBank=new Bank("hh","pnb",1,"1234",m,"as","sa",sqlDate,"er",234,"yu");
-	//System.out.println(p.addBank(myBank));
-	//Customer_Transaction ct=new Customer_Transaction(5,"q","f",67.5,sqlDate,"he","hi","ho","hu","ha");
-	//System.out.println(p.addCustomer_Transaction(ct));
+	Map<String,String> m=new HashMap<String,String>();
+	m.put("val1", "123");
+	m.put("val2", "87");
+	java.sql.Date sqlDate = java.sql.Date.valueOf("2017-11-11");
+	Bank myBank=new Bank("hh","pnb",1,"1234",m,"as","sa",sqlDate,"er",234,"yu");
+	System.out.println(p.addBank(myBank));
+	Customer_Transaction ct=new Customer_Transaction(5,"q","f",67.5,sqlDate,"he","hi","ho","hu","ha");
+	System.out.println(p.addCustomer_Transaction(ct));
 }
 
 }
