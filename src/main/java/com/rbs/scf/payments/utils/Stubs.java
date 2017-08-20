@@ -30,7 +30,7 @@ public class Stubs {
 		newObj.put("sellerId",321);
 		newObj.put("amount",10000);
 		newObj.put("currency","USD");
-		newObj.put("dateOfPayment","22/08/2017");
+		newObj.put("dateOfPayment","22-08-2017");
 		return newObj.toString();
 		
 	}
