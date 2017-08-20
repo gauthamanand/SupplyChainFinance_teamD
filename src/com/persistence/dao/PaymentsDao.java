@@ -22,8 +22,4 @@ boolean addCustomer_Transaction(Customer_Transaction ct);
 boolean addBank_to_Customer(Bank_to_Customer btc);
 boolean addCustomer_to_Bank(Customer_to_Bank ctb);
 
-//to extract details of pending transactions
-Customer_Transaction[] getAllPendingCustomerTransactionDetails();
-Bank_to_Customer[] getAllPendingBankToCustomerDetails();
-Customer_to_Bank[] getAllPendingCustomerToBankDetails();
 }
