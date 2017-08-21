@@ -12,9 +12,9 @@ import java.util.Map;
 import com.rbs.scf.payments.model.dbconn.ConnectionClass;
 import com.rbs.scf.payments.model.beans.*;
 
-public class PaymentsIMPL implements PaymentsDao {
+public class PaymentsImpl implements PaymentsDao {
 	ConnectionClass c;
-	public PaymentsIMPL()
+	public PaymentsImpl()
 	{
 		c=new ConnectionClass();
 	}
@@ -623,7 +623,7 @@ public Customer_to_Bank[] getAllPendingCustomerToBankDetails(String status) {
 		return null;
 }
 public static void main(String[] args) throws ParseException {
-	PaymentsIMPL p=new PaymentsIMPL();
+	PaymentsImpl p=new PaymentsImpl();
 	Map<String,String> m=new HashMap<String,String>();
 	m.put("val1", "123");
 	m.put("val2", "87");
