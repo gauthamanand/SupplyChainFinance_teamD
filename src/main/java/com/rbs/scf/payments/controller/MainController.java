@@ -17,6 +17,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import com.rbs.scf.payments.model.core.*;
@@ -44,12 +45,6 @@ public class MainController {
     @Produces(MediaType.APPLICATION_JSON)
     public String getInititateTransaction(@QueryParam("InvoiceId")int invoiceId,@Context HttpServletRequest request) throws JSONException
     {
-    		String userid;
-    		HttpSession sess = request.getSession(false);
-    		if(sess==null)
-    		{
-    			userid = "1";
-    		}
     		
     		ConsumeRestService consumer = new ConsumeRestService();
     		
@@ -57,24 +52,24 @@ public class MainController {
     		return consumer.getInvoice(invoiceId);
     }
     
-    @POST
-    @Path("/initTransaction")
+    @GET
+    @Path("/sendInitTransaction")
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public String postInititateTransaction(@FormParam("sender")String senderId,
-    		@FormParam("amount")double amount,
-    		@FormParam("currency")String currency,
-    		@FormParam("beneficiary")String beneficiary,
-    		@FormParam("accountNo")String accno,
-    		@FormParam("date")String date,
-    		@FormParam("details")String details,
-    		@FormParam("comments")String comments
+    public String postInititateTransaction(@QueryParam("sender")String senderId,
+    		@QueryParam("amount")double amount,
+    		@QueryParam("currency")String currency,
+    		@QueryParam("beneficiary")String beneficiary,
+    		@QueryParam("accountNo")String accno,
+    		@QueryParam("date")String date,
+    		@QueryParam("details")String details,
+    		@QueryParam("comments")String comments
     		) throws ParseException, JSONException{
     	
     	Random generator= new Random();
     	int txnId = generator.nextInt(10000);
-    	java.sql.Date dt = Conversions.convertToSqlDate(date);
-    	Customer_Transaction newTrans = new Customer_Transaction(txnId, "104", currency, amount, dt, null, null, comments, senderId,beneficiary );
+    	java.sql.Date sqlDate = java.sql.Date.valueOf(date);
+    	
+    	Customer_Transaction newTrans = new Customer_Transaction(txnId, "104", currency, amount, sqlDate, null, null, comments, senderId,beneficiary );
     	Payment pay = new Payment();
     	JSONObject returnStatus = new JSONObject();
     	
@@ -89,6 +84,25 @@ public class MainController {
     }
     
     
+    @GET 
+    @Path("/getAllTransaction")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getAllTransactions()
+    {
+    	Payment pay = new Payment();
+    	JSONArray resultArray =  pay.getAllTransactions();
+    	return resultArray.toString();
+    }
+    
+    @GET 
+    @Path("/getTransaction")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getTransactions(@QueryParam("TransactionId")int txnId)
+    {
+    	Payment pay = new Payment();
+    	JSONObject jsonObj =  pay.getTransaction(txnId);
+    	return jsonObj.toString();
+    }
     
     
     
