@@ -12,9 +12,9 @@ import java.util.Map;
 import com.rbs.scf.payments.model.dbconn.ConnectionClass;
 import com.rbs.scf.payments.model.beans.*;
 
-public class PaymentsImpl implements PaymentsDao {
+public class PaymentsIMPL implements PaymentsDao {
 	ConnectionClass c;
-	public PaymentsImpl()
+	public PaymentsIMPL()
 	{
 		c=new ConnectionClass();
 	}
@@ -518,17 +518,123 @@ public boolean addCustomer_to_Bank(Customer_to_Bank ctb) {
 		catch(Exception e){ System.out.println(e);}  
 	return s;
 }
+
+@Override
+public Customer_Transaction[] getAllPendingCustomerTransactionDetails(String status) {
+	try {
+		Connection con=c.getConnection();
+		PreparedStatement stmt1=con.prepareStatement("select * from transaction where status=?",ResultSet.TYPE_SCROLL_SENSITIVE, 
+                ResultSet.CONCUR_UPDATABLE);  
+		stmt1.setString(1, status);
+		ResultSet rs1=stmt1.executeQuery();
+		int i=0,count=0;
+		//System.out.println("Hello"+count);
+		while (rs1.next())
+		{
+		    // Process the row.
+		    count++;
+		}
+		rs1.beforeFirst();
+		Customer_Transaction b[]=new Customer_Transaction[count];
+		while(rs1.next())  
+		{	
+			int s1=rs1.getInt(1);
+			PreparedStatement stmt=con.prepareStatement("select * from customer_transaction where transaction_id=?",ResultSet.TYPE_SCROLL_SENSITIVE, 
+	                ResultSet.CONCUR_UPDATABLE); 
+			stmt.setInt(1, s1);
+			System.out.println("Hello"+count);
+			ResultSet rs=stmt.executeQuery();
+			if( rs.first()){
+				 
+			Customer_Transaction t1=new Customer_Transaction(rs1.getInt(1),rs1.getString(2),rs1.getString(3),rs1.getDouble(4),rs1.getDate(5),rs1.getString(6),rs1.getString(7),rs1.getString(8),rs.getString(2),rs.getString(3));
+			b[i++]=t1;}
+		}
+		con.close();return b;
+		}
+		catch(Exception e){ System.out.println(e);}  
+		return null;
+}
+@Override
+public Bank_to_Customer[] getAllPendingBankToCustomerDetails(String status) {
+	try {
+		Connection con=c.getConnection();
+		PreparedStatement stmt1=con.prepareStatement("select * from transaction where status=?",ResultSet.TYPE_SCROLL_SENSITIVE, 
+                ResultSet.CONCUR_UPDATABLE);  
+		stmt1.setString(1, status);
+		ResultSet rs1=stmt1.executeQuery();
+		int i=0,count=0;
+		//System.out.println("Hello"+count);
+		while ( rs1.next() )
+		{
+		    // Process the row.
+		    count++;
+		}
+		rs1.beforeFirst();
+		Bank_to_Customer b[]=new Bank_to_Customer[count];
+		while(rs1.next())  
+		{	
+			int s1=rs1.getInt(1);
+			PreparedStatement stmt=con.prepareStatement("select * from bank_to_customer where transaction_id=?",ResultSet.TYPE_SCROLL_SENSITIVE, 
+	                ResultSet.CONCUR_UPDATABLE); 
+			stmt.setInt(1, s1);
+			ResultSet rs=stmt.executeQuery();
+			System.out.println("Hello"+count);
+			if( rs.first()){
+			Bank_to_Customer t1=new Bank_to_Customer(rs1.getInt(1),rs1.getString(2),rs1.getString(3),rs1.getDouble(4),rs1.getDate(5),rs1.getString(6),rs1.getString(7),rs1.getString(8),rs.getString(2),rs.getString(3));
+			b[i++]=t1;}
+		}
+		con.close();return b;
+		}
+		catch(Exception e){ System.out.println(e);}  
+		return null;
+}
+@Override
+public Customer_to_Bank[] getAllPendingCustomerToBankDetails(String status) {
+	try {
+		Connection con=c.getConnection();
+		PreparedStatement stmt1=con.prepareStatement("select * from transaction where status=?",ResultSet.TYPE_SCROLL_SENSITIVE, 
+                ResultSet.CONCUR_UPDATABLE);  
+		stmt1.setString(1, status);
+		ResultSet rs1=stmt1.executeQuery();
+		int i=0,count=0;
+		//System.out.println("Hello"+count);
+		while ( rs1.next() )
+		{
+		    // Process the row.
+		    count++;
+		}
+		rs1.beforeFirst();
+		Customer_to_Bank b[]=new Customer_to_Bank[count];
+		while(rs1.next())  
+		{	
+			int s1=rs1.getInt(1);
+			PreparedStatement stmt=con.prepareStatement("select * from customer_to_bank where transaction_id=?",ResultSet.TYPE_SCROLL_SENSITIVE, 
+	                ResultSet.CONCUR_UPDATABLE); 
+			stmt.setInt(1, s1);
+			ResultSet rs=stmt.executeQuery();
+			System.out.println("Hello"+count);
+			if( rs.first()){
+			Customer_to_Bank t1=new Customer_to_Bank(rs1.getInt(1),rs1.getString(2),rs1.getString(3),rs1.getDouble(4),rs1.getDate(5),rs1.getString(6),rs1.getString(7),rs1.getString(8),rs.getString(2),rs.getString(3));
+			b[i++]=t1;}
+		}
+		con.close();return b;
+		}
+		catch(Exception e){ System.out.println(e);}  
+		return null;
+}
 public static void main(String[] args) throws ParseException {
-	PaymentsImpl p=new PaymentsImpl();
-	
+	PaymentsIMPL p=new PaymentsIMPL();
 	Map<String,String> m=new HashMap<String,String>();
 	m.put("val1", "123");
 	m.put("val2", "87");
 	java.sql.Date sqlDate = java.sql.Date.valueOf("2017-11-11");
-	Bank myBank=new Bank("hh","pnb",1,"1234",m,"as","sa",sqlDate,"er",234,"yu");
-	System.out.println(p.addBank(myBank));
-	Customer_Transaction ct=new Customer_Transaction(5,"q","f",67.5,sqlDate,"he","hi","ho","hu","ha");
-	System.out.println(p.addCustomer_Transaction(ct));
+	//Bank myBank=new Bank("hh","aakriti",1,"1234",m,"as","sa",sqlDate,"er",234,"yu");
+	//System.out.println(p.addBank(myBank));
+	//Customer_Transaction ct=new Customer_Transaction(8,"abcd","f",67.5,sqlDate,"a","pending","c","d","e");
+	//System.out.println(p.addCustomer_Transaction(ct));
+	//Customer_Transaction ct1[]=p.getAllPendingCustomerTransactionDetails("pening");
+	//System.out.println(ct1[0].getTransaction_id());
 }
+
 
 }
