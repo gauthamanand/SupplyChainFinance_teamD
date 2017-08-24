@@ -949,6 +949,116 @@ public Customer_to_Bank[] getCustomerToBankDetailsbyDate(Date d) {
 		catch(Exception e){ System.out.println(e);}  
 		return null;
 }
+@Override
+public boolean addSanctionedCountry(String code,String country) {
+	boolean s=false;
+	try {
+		Connection con=c.getConnection();
+		Statement s1=con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, 
+                ResultSet.CONCUR_UPDATABLE);
+		ResultSet rss=s1.executeQuery("select count(*) from sanc_countries");
+		int count=0;
+		while(rss.next()) {
+			count=rss.getInt(1);
+		}
+		count+=1;
+		PreparedStatement stmt1=con.prepareStatement("insert into sanc_countries values(?,?,?)",ResultSet.TYPE_SCROLL_SENSITIVE, 
+                ResultSet.CONCUR_UPDATABLE); 
+		stmt1.setInt(1, count);
+		stmt1.setString(2, country);
+		stmt1.setString(3, code);
+		
+		int rs1=stmt1.executeUpdate();
+		System.out.println(rs1);
+		
+		if(rs1==1)  
+		{	
+			    s=true;
+			}
+		
+		con.close();
+		}
+		catch(Exception e){ System.out.println(e);}  
+	return s;
+}
+@Override
+public boolean addSanctionedName(String name) {
+	boolean s=false;
+	try {
+		Connection con=c.getConnection();
+		Statement s1=con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, 
+                ResultSet.CONCUR_UPDATABLE);
+		ResultSet rss=s1.executeQuery("select count(*) from sanc_users");
+		int count=0;
+		while(rss.next()) {
+			count=rss.getInt(1);
+		}
+		count+=1;
+		PreparedStatement stmt1=con.prepareStatement("insert into sanc_users values(?,?)",ResultSet.TYPE_SCROLL_SENSITIVE, 
+                ResultSet.CONCUR_UPDATABLE); 
+		stmt1.setInt(1, count);
+		stmt1.setString(2, name);
+		
+		int rs1=stmt1.executeUpdate();
+		System.out.println(rs1);
+		
+		if(rs1==1)  
+		{	
+			    s=true;
+			}
+		
+		con.close();
+		}
+		catch(Exception e){ System.out.println(e);}  
+	return s;
+}
+@Override
+public boolean isCountrySanctioned(String code) {
+	boolean s=false;
+	try {
+		Connection con=c.getConnection();
+		PreparedStatement s1=con.prepareStatement("select count(*) from sanc_countries where code=?",ResultSet.TYPE_SCROLL_SENSITIVE, 
+                ResultSet.CONCUR_UPDATABLE);
+		s1.setString(1, code);
+		ResultSet rss=s1.executeQuery();
+		int rs1=0;
+		while(rss.next()) {
+		rs1=rss.getInt(1);
+		}
+		if(rs1!=0)  
+		{	
+			    s=true;
+			}
+		
+		con.close();
+		}
+		catch(Exception e){ System.out.println(e);}  
+	return s;
+}
+@Override
+public boolean isPersonSanctioned(String name) {
+	boolean s=false;
+	try {
+		Connection con=c.getConnection();
+		PreparedStatement s1=con.prepareStatement("select count(*) from sanc_users where name=?",ResultSet.TYPE_SCROLL_SENSITIVE, 
+                ResultSet.CONCUR_UPDATABLE);
+		s1.setString(1, name);
+		ResultSet rss=s1.executeQuery();
+		int rs1=0;
+		while(rss.next()) {
+		rs1=rss.getInt(1);
+		}
+		
+		if(rs1!=0)  
+		{	
+			    s=true;
+			}
+		
+		con.close();
+		}
+		catch(Exception e){ System.out.println(e);}  
+	return s;
+}
 public static void main(String[] args) throws ParseException {
 	PaymentsImpl p=new PaymentsImpl();
 	Map<String,String> m=new HashMap<String,String>();

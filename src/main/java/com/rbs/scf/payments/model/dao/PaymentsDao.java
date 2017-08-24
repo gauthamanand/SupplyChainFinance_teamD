@@ -46,4 +46,10 @@ Customer_to_Bank[] getCustomerToBankDetailsbyPayeeId(String sid);
 Customer_Transaction[] getCustomerTransactionDetailsbyDate(Date d);
 Bank_to_Customer[] getBankToCustomerDetailsbyDate(Date d);
 Customer_to_Bank[] getCustomerToBankDetailsbyDate(Date d);
+
+//aml
+boolean isCountrySanctioned(String code);
+boolean isPersonSanctioned(String name);
+boolean addSanctionedCountry(String code,String country);
+boolean addSanctionedName(String name);
 }
