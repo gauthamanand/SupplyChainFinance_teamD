@@ -25,6 +25,7 @@ public void setCountry(String country) {
 /*
 create table sanc_countries(id numeric(10),
 name varchar(40));
+
 create table sanc_users(id numeric(10),
 name varchar(40));
  */

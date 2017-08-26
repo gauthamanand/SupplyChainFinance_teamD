@@ -60,7 +60,7 @@ Vostro_Accounts[] getAllVostroAccounts();
 boolean addFXData(FXData fxd[]);
 double getFXData(String currency);
 FXData[] getAllFXData();
-
+  
 //aml
 boolean isCountrySanctioned(String code);
 boolean isPersonSanctioned(String name);

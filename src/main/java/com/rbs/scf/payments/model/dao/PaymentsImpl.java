@@ -1064,6 +1064,7 @@ public boolean isPersonSanctioned(String name) {
 		catch(Exception e){ System.out.println(e);}  
 	return s;
 }
+
 @Override
 public boolean addFXData(FXData[] fxd) {
 	boolean s=false;
