@@ -1,6 +1,7 @@
 package com.rbs.scf.payments.model.dao;
 
 import java.sql.Date;
+import java.util.Map;
 
 import com.rbs.scf.payments.model.beans.*;
 
@@ -46,4 +47,23 @@ Customer_to_Bank[] getCustomerToBankDetailsbyPayeeId(String sid);
 Customer_Transaction[] getCustomerTransactionDetailsbyDate(Date d);
 Bank_to_Customer[] getBankToCustomerDetailsbyDate(Date d);
 Customer_to_Bank[] getCustomerToBankDetailsbyDate(Date d);
+
+//getAllNostroAccountsforABank
+Map<String,String> getNostroAccounts(String swift_id);
+
+//add and get vostro accounts
+Vostro_Accounts[] getVostroAccounts(String swift_id);
+boolean addVostroAccount(Vostro_Accounts v);
+Vostro_Accounts[] getAllVostroAccounts();
+
+//upload and extract fx data
+boolean addFXData(FXData fxd[]);
+double getFXData(String currency);
+FXData[] getAllFXData();
+
+//aml
+boolean isCountrySanctioned(String code);
+boolean isPersonSanctioned(String name);
+boolean addSanctionedCountry(String code,String country);
+boolean addSanctionedName(String name);
 }

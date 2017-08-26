@@ -7,28 +7,60 @@ public class Bank {
 	private String swift_id;
 private String bank_name;
 private int reg_no;
+private String currency;
 private String acc_no;
 private Map<String,String> nostro_accounts;
 private String category;
 private String dir_name;
 private Date d;
 private String address;
+private String city;
+private String state;
+private String country;
 private int contact;
 private String pan_no;
-public Bank(String swift_id,String bank_name, int reg_no, String acc_no, Map<String, String> nostro_accounts, String category,
-		String dir_name, Date d, String address, int contact, String pan_no) {
+public Bank(String swift_id,String bank_name, int reg_no, String currency,String acc_no, Map<String, String> nostro_accounts, String category,
+		String dir_name, Date d, String address,String city,String state,String country, int contact, String pan_no) {
 	super();
 	this.swift_id=swift_id;
 	this.bank_name = bank_name;
 	this.reg_no = reg_no;
+	this.currency=currency;
 	this.acc_no = acc_no;
 	this.nostro_accounts = nostro_accounts;
 	this.category = category;
 	this.dir_name = dir_name;
 	this.d = d;
 	this.address = address;
+	this.city=city;
+	this.state=state;
+	this.country=country;
 	this.contact = contact;
 	this.pan_no = pan_no;
+}
+public String getCurrency() {
+	return currency;
+}
+public void setCurrency(String currency) {
+	this.currency = currency;
+}
+public String getCity() {
+	return city;
+}
+public void setCity(String city) {
+	this.city = city;
+}
+public String getState() {
+	return state;
+}
+public void setState(String state) {
+	this.state = state;
+}
+public String getCountry() {
+	return country;
+}
+public void setCountry(String country) {
+	this.country = country;
 }
 public String getSwift_id() {
 	return swift_id;
@@ -103,10 +135,19 @@ public void setPan_no(String pan_no) {
 bank_name varchar(40) not null,
 reg_no numeric(10),
 acc_no varchar(40),
-nostro_accounts jsonb,
 category varchar(40),
 dir_name varchar(40),
 date_of_incorp date,
-address varchar(100),
 contact numeric(13) not null,
-pan_no varchar(12) not null);*/
+pan_no varchar(12) not null,
+address varchar(60),
+city varchar(20),
+state varchar(20),
+country varchar(20),
+currency varchar(10));*/
+
+/*
+ create table nostro_accounts(swift_id varchar(12),
+ bank_name varchar(40),
+ account_number varchar(40));
+ */
