@@ -2,11 +2,13 @@ package com.rbs.scf.payments.model.dao;
 
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import com.rbs.scf.payments.model.dbconn.ConnectionClass;
@@ -54,7 +56,7 @@ public class PaymentsImpl implements PaymentsDao {
 					m.put(rs.getString(2), rs.getString(3));
 				
 			}
-			Bank b1=new Bank(rs1.getString(1),rs1.getString(2),rs1.getInt(3),rs1.getString(4),m,rs1.getString(5),rs1.getString(6),rs1.getDate(7),rs1.getString(8),rs1.getInt(9),rs1.getString(10));
+			Bank b1=new Bank(rs1.getString(1),rs1.getString(2),rs1.getInt(3),rs1.getString(14),rs1.getString(4),m,rs1.getString(5),rs1.getString(6),rs1.getDate(7),rs1.getString(10),rs1.getString(11),rs1.getString(12),rs1.getString(13),rs1.getInt(8),rs1.getString(9));
 			b[i++]=b1;
 		}
 		con.close();
@@ -220,7 +222,7 @@ public Bank getBankDetails(String swift_id) {
 					m.put(rs.getString(2), rs.getString(3));
 				
 			}
-			b1=new Bank(rs1.getString(1),rs1.getString(2),rs1.getInt(3),rs1.getString(4),m,rs1.getString(5),rs1.getString(6),rs1.getDate(7),rs1.getString(8),rs1.getInt(9),rs1.getString(10));
+			b1=new Bank(rs1.getString(1),rs1.getString(2),rs1.getInt(3),rs1.getString(14),rs1.getString(4),m,rs1.getString(5),rs1.getString(6),rs1.getDate(7),rs1.getString(10),rs1.getString(11),rs1.getString(12),rs1.getString(13),rs1.getInt(8),rs1.getString(9));
 			
 		}
 		con.close();
@@ -335,18 +337,22 @@ public boolean addBank(Bank b) {
 	boolean s=false;
 	try {
 		Connection con=c.getConnection();
-		PreparedStatement stmt1=con.prepareStatement("insert into bank values(?,?,?,?,?,?,?,?,?,?)",ResultSet.TYPE_SCROLL_SENSITIVE, 
+		PreparedStatement stmt1=con.prepareStatement("insert into bank values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)",ResultSet.TYPE_SCROLL_SENSITIVE, 
                 ResultSet.CONCUR_UPDATABLE);  
 		stmt1.setString(1, b.getSwift_id());
 		stmt1.setString(2, b.getBank_name());
 		stmt1.setInt(3, b.getReg_no());
-		stmt1.setString(4, b.getAcc_no());
 		stmt1.setString(5, b.getCategory());
+		stmt1.setString(4, b.getAcc_no());
 		stmt1.setString(6, b.getDir_name());
 		stmt1.setDate(7, b.getD());
-		stmt1.setString(8, b.getAddress());
-		stmt1.setInt(9, b.getContact());
-		stmt1.setString(10, b.getPan_no());
+		stmt1.setString(10, b.getAddress());
+		stmt1.setInt(8, b.getContact());
+		stmt1.setString(9, b.getPan_no());
+		stmt1.setString(11, b.getCity());
+		stmt1.setString(12, b.getState());
+		stmt1.setString(13, b.getCountry());
+		stmt1.setString(14, b.getCurrency());
 		int rs1=stmt1.executeUpdate();
 		System.out.println(rs1);
 		
@@ -519,6 +525,7 @@ public boolean addCustomer_to_Bank(Customer_to_Bank ctb) {
 	return s;
 }
 
+
 @Override
 public Customer_Transaction[] getAllPendingCustomerTransactionDetails(String status) {
 	try {
@@ -622,6 +629,617 @@ public Customer_to_Bank[] getAllPendingCustomerToBankDetails(String status) {
 		catch(Exception e){ System.out.println(e);}  
 		return null;
 }
+
+@Override
+public Customer_Transaction[] getCustomerTransactionDetailsbyPayerId(String sid) {
+	try {
+		Connection con=c.getConnection();
+		PreparedStatement stmt1=con.prepareStatement("select * from customer_transaction where payer_id=?",ResultSet.TYPE_SCROLL_SENSITIVE, 
+                ResultSet.CONCUR_UPDATABLE);  
+		stmt1.setString(1, sid);
+		ResultSet rs1=stmt1.executeQuery();
+		int i=0,count=0;
+		//System.out.println("Hello"+count);
+		while ( rs1.next() )
+		{
+		    // Process the row.
+		    count++;
+		}
+		rs1.beforeFirst();
+		Customer_Transaction b[]=new Customer_Transaction[count];
+		Customer_Transaction t1=null;
+		while(rs1.next())  
+		{	
+			int s1=rs1.getInt(1);
+			PreparedStatement stmt=con.prepareStatement("select * from transaction where transaction_id=?",ResultSet.TYPE_SCROLL_SENSITIVE, 
+	                ResultSet.CONCUR_UPDATABLE); 
+			stmt.setInt(1, s1);
+			ResultSet rs=stmt.executeQuery();
+			if( rs.first()){
+				 
+			t1=new Customer_Transaction(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getDouble(4),rs.getDate(5),rs.getString(6),rs.getString(7),rs.getString(8),rs1.getString(2),rs1.getString(3));
+			b[i++]=t1;
+			}
+		}
+		con.close();return b;
+		}
+		catch(Exception e){ System.out.println(e);}  
+		return null;
+}
+@Override
+public Bank_to_Customer[] getBankToCustomerDetailsbyPayerId(String sid) {
+	try {
+		Connection con=c.getConnection();
+		PreparedStatement stmt1=con.prepareStatement("select * from bank_to_customer where payer_id=?",ResultSet.TYPE_SCROLL_SENSITIVE, 
+                ResultSet.CONCUR_UPDATABLE);  
+		stmt1.setString(1, sid);
+		ResultSet rs1=stmt1.executeQuery();
+		int i=0,count=0;
+		//System.out.println("Hello"+count);
+		while ( rs1.next() )
+		{
+		    // Process the row.
+		    count++;
+		}
+		rs1.beforeFirst();
+		Bank_to_Customer b[]=new Bank_to_Customer[count];
+		Bank_to_Customer t1=null;
+		while(rs1.next())  
+		{	
+			int s1=rs1.getInt(1);
+			PreparedStatement stmt=con.prepareStatement("select * from transaction where transaction_id=?",ResultSet.TYPE_SCROLL_SENSITIVE, 
+	                ResultSet.CONCUR_UPDATABLE); 
+			stmt.setInt(1, s1);
+			ResultSet rs=stmt.executeQuery();
+			if( rs.first()){
+				 
+			t1=new Bank_to_Customer(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getDouble(4),rs.getDate(5),rs.getString(6),rs.getString(7),rs.getString(8),rs1.getString(2),rs1.getString(3));
+			b[i++]=t1;
+			}
+		}
+		con.close();return b;
+		}
+		catch(Exception e){ System.out.println(e);}  
+		return null;
+}
+@Override
+public Customer_to_Bank[] getCustomerToBankDetailsbyPayerId(String sid) {
+	try {
+		Connection con=c.getConnection();
+		PreparedStatement stmt1=con.prepareStatement("select * from customer_to_bank where payer_id=?",ResultSet.TYPE_SCROLL_SENSITIVE, 
+                ResultSet.CONCUR_UPDATABLE);  
+		stmt1.setString(1, sid);
+		ResultSet rs1=stmt1.executeQuery();
+		int i=0,count=0;
+		//System.out.println("Hello"+count);
+		while ( rs1.next() )
+		{
+		    // Process the row.
+		    count++;
+		}
+		rs1.beforeFirst();
+		Customer_to_Bank b[]=new Customer_to_Bank[count];
+		Customer_to_Bank t1=null;
+		while(rs1.next())  
+		{	
+			int s1=rs1.getInt(1);
+			PreparedStatement stmt=con.prepareStatement("select * from transaction where transaction_id=?",ResultSet.TYPE_SCROLL_SENSITIVE, 
+	                ResultSet.CONCUR_UPDATABLE); 
+			stmt.setInt(1, s1);
+			ResultSet rs=stmt.executeQuery();
+			if( rs.first()){
+				 
+			t1=new Customer_to_Bank(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getDouble(4),rs.getDate(5),rs.getString(6),rs.getString(7),rs.getString(8),rs1.getString(2),rs1.getString(3));
+			b[i++]=t1;
+			}
+		}
+		con.close();return b;
+		}
+		catch(Exception e){ System.out.println(e);}  
+		return null;
+}
+@Override
+public Customer_Transaction[] getCustomerTransactionDetailsbyPayeeId(String sid) {
+	try {
+		Connection con=c.getConnection();
+		PreparedStatement stmt1=con.prepareStatement("select * from customer_transaction where payee_id=?",ResultSet.TYPE_SCROLL_SENSITIVE, 
+                ResultSet.CONCUR_UPDATABLE);  
+		stmt1.setString(1, sid);
+		ResultSet rs1=stmt1.executeQuery();
+		int i=0,count=0;
+		//System.out.println("Hello"+count);
+		while ( rs1.next() )
+		{
+		    // Process the row.
+		    count++;
+		}
+		rs1.beforeFirst();
+		Customer_Transaction b[]=new Customer_Transaction[count];
+		Customer_Transaction t1=null;
+		while(rs1.next())  
+		{	
+			int s1=rs1.getInt(1);
+			PreparedStatement stmt=con.prepareStatement("select * from transaction where transaction_id=?",ResultSet.TYPE_SCROLL_SENSITIVE, 
+	                ResultSet.CONCUR_UPDATABLE); 
+			stmt.setInt(1, s1);
+			ResultSet rs=stmt.executeQuery();
+			if( rs.first()){
+				 
+			t1=new Customer_Transaction(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getDouble(4),rs.getDate(5),rs.getString(6),rs.getString(7),rs.getString(8),rs1.getString(2),rs1.getString(3));
+			b[i++]=t1;
+			}
+		}
+		con.close();return b;
+		}
+		catch(Exception e){ System.out.println(e);}  
+		return null;
+}
+@Override
+public Bank_to_Customer[] getBankToCustomerDetailsbyPayeeId(String sid) {
+	try {
+		Connection con=c.getConnection();
+		PreparedStatement stmt1=con.prepareStatement("select * from bank_to_customer where payee_id=?",ResultSet.TYPE_SCROLL_SENSITIVE, 
+                ResultSet.CONCUR_UPDATABLE);  
+		stmt1.setString(1, sid);
+		ResultSet rs1=stmt1.executeQuery();
+		int i=0,count=0;
+		//System.out.println("Hello"+count);
+		while ( rs1.next() )
+		{
+		    // Process the row.
+		    count++;
+		}
+		rs1.beforeFirst();
+		Bank_to_Customer b[]=new Bank_to_Customer[count];
+		Bank_to_Customer t1=null;
+		while(rs1.next())  
+		{	
+			int s1=rs1.getInt(1);
+			PreparedStatement stmt=con.prepareStatement("select * from transaction where transaction_id=?",ResultSet.TYPE_SCROLL_SENSITIVE, 
+	                ResultSet.CONCUR_UPDATABLE); 
+			stmt.setInt(1, s1);
+			ResultSet rs=stmt.executeQuery();
+			if( rs.first()){
+				 
+			t1=new Bank_to_Customer(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getDouble(4),rs.getDate(5),rs.getString(6),rs.getString(7),rs.getString(8),rs1.getString(2),rs1.getString(3));
+			b[i++]=t1;
+			}
+		}
+		con.close();return b;
+		}
+		catch(Exception e){ System.out.println(e);}  
+		return null;
+}
+@Override
+public Customer_to_Bank[] getCustomerToBankDetailsbyPayeeId(String sid) {
+	try {
+		Connection con=c.getConnection();
+		PreparedStatement stmt1=con.prepareStatement("select * from customer_to_bank where payee_id=?",ResultSet.TYPE_SCROLL_SENSITIVE, 
+                ResultSet.CONCUR_UPDATABLE);  
+		stmt1.setString(1, sid);
+		ResultSet rs1=stmt1.executeQuery();
+		int i=0,count=0;
+		//System.out.println("Hello"+count);
+		while ( rs1.next() )
+		{
+		    // Process the row.
+		    count++;
+		}
+		rs1.beforeFirst();
+		Customer_to_Bank b[]=new Customer_to_Bank[count];
+		Customer_to_Bank t1=null;
+		while(rs1.next())  
+		{	
+			int s1=rs1.getInt(1);
+			PreparedStatement stmt=con.prepareStatement("select * from transaction where transaction_id=?",ResultSet.TYPE_SCROLL_SENSITIVE, 
+	                ResultSet.CONCUR_UPDATABLE); 
+			stmt.setInt(1, s1);
+			ResultSet rs=stmt.executeQuery();
+			if( rs.first()){
+				 
+			t1=new Customer_to_Bank(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getDouble(4),rs.getDate(5),rs.getString(6),rs.getString(7),rs.getString(8),rs1.getString(2),rs1.getString(3));
+			b[i++]=t1;
+			}
+		}
+		con.close();return b;
+		}
+		catch(Exception e){ System.out.println(e);}  
+		return null;
+}
+@Override
+public Customer_Transaction[] getCustomerTransactionDetailsbyDate(Date d) {
+	try {
+		Connection con=c.getConnection();
+		PreparedStatement stmt1=con.prepareStatement("select * from transaction where transaction_date=?",ResultSet.TYPE_SCROLL_SENSITIVE, 
+                ResultSet.CONCUR_UPDATABLE);  
+		stmt1.setDate(1, d);
+		ResultSet rs1=stmt1.executeQuery();
+		int i=0,count=0;
+		//System.out.println("Hello"+count);
+		while ( rs1.next() )
+		{
+		    // Process the row.
+		    count++;
+		}
+		rs1.beforeFirst();
+		Customer_Transaction b[]=new Customer_Transaction[count];
+		Customer_Transaction t1=null;
+		while(rs1.next())  
+		{	
+			int s1=rs1.getInt(1);
+			PreparedStatement stmt=con.prepareStatement("select * from customer_transaction where transaction_id=?",ResultSet.TYPE_SCROLL_SENSITIVE, 
+	                ResultSet.CONCUR_UPDATABLE); 
+			stmt.setInt(1, s1);
+			ResultSet rs=stmt.executeQuery();
+			if( rs.first()){
+				 
+			t1=new Customer_Transaction(rs1.getInt(1),rs1.getString(2),rs1.getString(3),rs1.getDouble(4),rs1.getDate(5),rs1.getString(6),rs1.getString(7),rs1.getString(8),rs.getString(2),rs.getString(3));
+			b[i++]=t1;
+			}
+		}
+		con.close();return b;
+		}
+		catch(Exception e){ System.out.println(e);}  
+		return null;
+}
+@Override
+public Bank_to_Customer[] getBankToCustomerDetailsbyDate(Date d) {
+	try {
+		Connection con=c.getConnection();
+		PreparedStatement stmt1=con.prepareStatement("select * from transaction where transaction_date=?",ResultSet.TYPE_SCROLL_SENSITIVE, 
+                ResultSet.CONCUR_UPDATABLE);  
+		stmt1.setDate(1, d);
+		ResultSet rs1=stmt1.executeQuery();
+		int i=0,count=0;
+		//System.out.println("Hello"+count);
+		while ( rs1.next() )
+		{
+		    // Process the row.
+		    count++;
+		}
+		rs1.beforeFirst();
+		Bank_to_Customer b[]=new Bank_to_Customer[count];
+		Bank_to_Customer t1=null;
+		while(rs1.next())  
+		{	
+			int s1=rs1.getInt(1);
+			PreparedStatement stmt=con.prepareStatement("select * from bank_to_customer where transaction_id=?",ResultSet.TYPE_SCROLL_SENSITIVE, 
+	                ResultSet.CONCUR_UPDATABLE); 
+			stmt.setInt(1, s1);
+			ResultSet rs=stmt.executeQuery();
+			if( rs.first()){
+				 
+			t1=new Bank_to_Customer(rs1.getInt(1),rs1.getString(2),rs1.getString(3),rs1.getDouble(4),rs1.getDate(5),rs1.getString(6),rs1.getString(7),rs1.getString(8),rs.getString(2),rs.getString(3));
+			b[i++]=t1;
+			}
+		}
+		con.close();return b;
+		}
+		catch(Exception e){ System.out.println(e);}  
+		return null;
+}
+@Override
+public Customer_to_Bank[] getCustomerToBankDetailsbyDate(Date d) {
+	try {
+		Connection con=c.getConnection();
+		PreparedStatement stmt1=con.prepareStatement("select * from transaction where transaction_date=?",ResultSet.TYPE_SCROLL_SENSITIVE, 
+                ResultSet.CONCUR_UPDATABLE);  
+		stmt1.setDate(1, d);
+		ResultSet rs1=stmt1.executeQuery();
+		int i=0,count=0;
+		//System.out.println("Hello"+count);
+		while ( rs1.next() )
+		{
+		    // Process the row.
+		    count++;
+		}
+		rs1.beforeFirst();
+		Customer_to_Bank b[]=new Customer_to_Bank[count];
+		Customer_to_Bank t1=null;
+		while(rs1.next())  
+		{	
+			int s1=rs1.getInt(1);
+			PreparedStatement stmt=con.prepareStatement("select * from customer_to_bank where transaction_id=?",ResultSet.TYPE_SCROLL_SENSITIVE, 
+	                ResultSet.CONCUR_UPDATABLE); 
+			stmt.setInt(1, s1);
+			ResultSet rs=stmt.executeQuery();
+			if( rs.first()){
+				 
+			t1=new Customer_to_Bank(rs1.getInt(1),rs1.getString(2),rs1.getString(3),rs1.getDouble(4),rs1.getDate(5),rs1.getString(6),rs1.getString(7),rs1.getString(8),rs.getString(2),rs.getString(3));
+			b[i++]=t1;
+			}
+		}
+		con.close();return b;
+		}
+		catch(Exception e){ System.out.println(e);}  
+		return null;
+}
+@Override
+public boolean addSanctionedCountry(String code,String country) {
+	boolean s=false;
+	try {
+		Connection con=c.getConnection();
+		Statement s1=con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, 
+                ResultSet.CONCUR_UPDATABLE);
+		ResultSet rss=s1.executeQuery("select count(*) from sanc_countries");
+		int count=0;
+		while(rss.next()) {
+			count=rss.getInt(1);
+		}
+		count+=1;
+		PreparedStatement stmt1=con.prepareStatement("insert into sanc_countries values(?,?,?)",ResultSet.TYPE_SCROLL_SENSITIVE, 
+                ResultSet.CONCUR_UPDATABLE); 
+		stmt1.setInt(1, count);
+		stmt1.setString(2, country);
+		stmt1.setString(3, code);
+		
+		int rs1=stmt1.executeUpdate();
+		System.out.println(rs1);
+		
+		if(rs1==1)  
+		{	
+			    s=true;
+			}
+		
+		con.close();
+		}
+		catch(Exception e){ System.out.println(e);}  
+	return s;
+}
+@Override
+public boolean addSanctionedName(String name) {
+	boolean s=false;
+	try {
+		Connection con=c.getConnection();
+		Statement s1=con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, 
+                ResultSet.CONCUR_UPDATABLE);
+		ResultSet rss=s1.executeQuery("select count(*) from sanc_users");
+		int count=0;
+		while(rss.next()) {
+			count=rss.getInt(1);
+		}
+		count+=1;
+		PreparedStatement stmt1=con.prepareStatement("insert into sanc_users values(?,?)",ResultSet.TYPE_SCROLL_SENSITIVE, 
+                ResultSet.CONCUR_UPDATABLE); 
+		stmt1.setInt(1, count);
+		stmt1.setString(2, name);
+		
+		int rs1=stmt1.executeUpdate();
+		System.out.println(rs1);
+		
+		if(rs1==1)  
+		{	
+			    s=true;
+			}
+		
+		con.close();
+		}
+		catch(Exception e){ System.out.println(e);}  
+	return s;
+}
+@Override
+public boolean isCountrySanctioned(String code) {
+	boolean s=false;
+	try {
+		Connection con=c.getConnection();
+		PreparedStatement s1=con.prepareStatement("select count(*) from sanc_countries where code=?",ResultSet.TYPE_SCROLL_SENSITIVE, 
+                ResultSet.CONCUR_UPDATABLE);
+		s1.setString(1, code);
+		ResultSet rss=s1.executeQuery();
+		int rs1=0;
+		while(rss.next()) {
+		rs1=rss.getInt(1);
+		}
+		if(rs1!=0)  
+		{	
+			    s=true;
+			}
+		
+		con.close();
+		}
+		catch(Exception e){ System.out.println(e);}  
+	return s;
+}
+@Override
+public boolean isPersonSanctioned(String name) {
+	boolean s=false;
+	try {
+		Connection con=c.getConnection();
+		PreparedStatement s1=con.prepareStatement("select count(*) from sanc_users where name=?",ResultSet.TYPE_SCROLL_SENSITIVE, 
+                ResultSet.CONCUR_UPDATABLE);
+		s1.setString(1, name);
+		ResultSet rss=s1.executeQuery();
+		int rs1=0;
+		while(rss.next()) {
+		rs1=rss.getInt(1);
+		}
+		
+		if(rs1!=0)  
+		{	
+			    s=true;
+			}
+		
+		con.close();
+		}
+		catch(Exception e){ System.out.println(e);}  
+	return s;
+}
+
+@Override
+public boolean addFXData(FXData[] fxd) {
+	boolean s=false;
+	try {
+		Connection con=c.getConnection();
+		int count=fxd.length;
+		PreparedStatement p=null;
+		for(int i=0;i<count;i++) {
+			p=con.prepareStatement("insert into fx_data values(?,?,?)",ResultSet.TYPE_SCROLL_SENSITIVE, 
+	                ResultSet.CONCUR_UPDATABLE);
+			p.setString(1, fxd[i].getCurrency());
+			p.setDouble(2, fxd[i].getRate());
+			p.setString(3, fxd[i].getCountry());
+			int rs=p.executeUpdate();
+			if(rs==1)
+				s=true;
+		}
+		
+		con.close();
+		}
+		catch(Exception e){ System.out.println(e);}  
+	return s;
+}
+@Override
+public double getFXData(String currency) {
+	double s=0;
+	try {
+		Connection con=c.getConnection();
+		
+		PreparedStatement p=null;
+		
+			p=con.prepareStatement("select rate from fx_data where currency=?",ResultSet.TYPE_SCROLL_SENSITIVE, 
+	                ResultSet.CONCUR_UPDATABLE);
+			p.setString(1, currency);
+			ResultSet rs=p.executeQuery();
+			while(rs.next()) {
+				s=rs.getDouble(1);
+			}
+		con.close();
+		}
+		catch(Exception e){ System.out.println(e);} 
+	return s;
+}
+@Override
+public FXData[] getAllFXData() {
+	
+	try {
+		Connection con=c.getConnection();
+		Statement s1=con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, 
+                ResultSet.CONCUR_UPDATABLE);
+		ResultSet rs=s1.executeQuery("select * from fx_data");
+		int i=0,count=0;
+		//System.out.println("Hello"+count);
+		while ( rs.next() )
+		{
+		    // Process the row.
+		    count++;
+		}
+		rs.beforeFirst();
+		FXData fxd[]=new FXData[count];
+			while(rs.next()) {
+				FXData f1=new FXData(rs.getString(1),rs.getDouble(2),rs.getString(3));
+				fxd[i++]=f1;
+			}
+			
+		con.close();
+		return fxd;
+		}
+		catch(Exception e){ System.out.println(e);} 
+	return null;
+}
+@Override
+public Map<String, String> getNostroAccounts(String swift_id) {
+	Map<String,String> s=new HashMap<String,String>();
+	try {
+		Connection con=c.getConnection();
+		
+		PreparedStatement p=null;
+		
+			p=con.prepareStatement("select * from nostro_accounts where swift_id=?",ResultSet.TYPE_SCROLL_SENSITIVE, 
+	                ResultSet.CONCUR_UPDATABLE);
+			p.setString(1, swift_id);
+			ResultSet rs=p.executeQuery();
+			while(rs.next()) {
+				s.put(rs.getString(2), rs.getString(3));
+			}
+		con.close();
+		}
+		catch(Exception e){ System.out.println(e);} 
+	return s;
+}
+@Override
+public Vostro_Accounts[] getVostroAccounts(String swift_id) {
+	
+	try {
+		Connection con=c.getConnection();
+		
+		PreparedStatement p=null;
+		
+			p=con.prepareStatement("select * from vostro_accounts where swift_id=?",ResultSet.TYPE_SCROLL_SENSITIVE, 
+	                ResultSet.CONCUR_UPDATABLE);
+			p.setString(1, swift_id);
+			ResultSet rs=p.executeQuery();
+			int i=0,count=0;
+			while (rs.next())
+			{
+			    // Process the row.
+			    count++;
+			}
+			rs.beforeFirst();
+			Vostro_Accounts v[]=new Vostro_Accounts[count];
+			while(rs.next()) {
+				Vostro_Accounts v1=new Vostro_Accounts(swift_id,rs.getString(2),rs.getString(3));
+				v[i++]=v1;
+			}
+		con.close();
+		return v;
+		}
+		catch(Exception e){ System.out.println(e);} 
+	return null;
+}
+@Override
+public boolean addVostroAccount(Vostro_Accounts v) {
+	boolean s=false;
+	try {
+		Connection con=c.getConnection();
+		PreparedStatement stmt1=con.prepareStatement("insert into vostro_accounts values(?,?,?)",ResultSet.TYPE_SCROLL_SENSITIVE, 
+                ResultSet.CONCUR_UPDATABLE);  
+		stmt1.setString(1, v.getSwift_id());
+		stmt1.setString(2, v.getOther_bank_swift_id());
+		stmt1.setString(3, v.getAccount_no());
+		
+		int rs1=stmt1.executeUpdate();
+		System.out.println(rs1);
+		
+		if(rs1==1)  
+		{	
+			
+			s=true;
+		}
+		con.close();
+		}
+		catch(Exception e){ System.out.println(e);}  
+	return s;
+}
+@Override
+public Vostro_Accounts[] getAllVostroAccounts() {
+	try {
+		Connection con=c.getConnection();
+		
+		Statement p=null;
+		
+			p=con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, 
+	                ResultSet.CONCUR_UPDATABLE);
+			ResultSet rs=p.executeQuery("select * from vostro_accounts");
+			int i=0,count=0;
+			while (rs.next())
+			{
+			    // Process the row.
+			    count++;
+			}
+			rs.beforeFirst();
+			Vostro_Accounts v[]=new Vostro_Accounts[count];
+			while(rs.next()) {
+				Vostro_Accounts v1=new Vostro_Accounts(rs.getString(1),rs.getString(2),rs.getString(3));
+				v[i++]=v1;
+			}
+		con.close();
+		return v;
+		}
+		catch(Exception e){ System.out.println(e);} 
+	return null;
+}
+
+
 public static void main(String[] args) throws ParseException {
 	PaymentsImpl p=new PaymentsImpl();
 	Map<String,String> m=new HashMap<String,String>();
@@ -632,9 +1250,30 @@ public static void main(String[] args) throws ParseException {
 	//System.out.println(p.addBank(myBank));
 	//Customer_Transaction ct=new Customer_Transaction(8,"abcd","f",67.5,sqlDate,"a","pending","c","d","e");
 	//System.out.println(p.addCustomer_Transaction(ct));
-	//Customer_Transaction ct1[]=p.getAllPendingCustomerTransactionDetails("pening");
+	//Customer_Transaction ct1[]=p.getAllPendingCustomerTransactionDetails("pending");
 	//System.out.println(ct1[0].getTransaction_id());
-}
+	//Customer_Transaction ct2=p.getCustomerTransactionDetailsbySellerId("hu");
+	//System.out.println(ct2.getPayee_id()+" "+ct2.getAmount());
+	
+	/*p.addSanctionedCountry("hello","h");
+	p.addSanctionedName("abcd");
+	System.out.println(p.isPersonSanctioned("aakriti"));
+	System.out.println(p.isCountrySanctioned("hello"));
+	FXData[] fxd=new FXData[1];
+	FXData fxdd=new FXData();
+	fxdd.setCurrency("INR");
+	fxdd.setRate(1000.01);fxd[0]=fxdd;
+	System.out.println(p.addFXData(fxd));*/
+	//Bank myBank=new Bank("swift_id","bank name",1,"currency","acc_no",m,"category","dirname",sqlDate,"add","city","state","country",123,"pan");
+		//	p.addBank(myBank);
+	//Bank b=p.getBankDetails("swift_id");
+	//System.out.println(b.getAcc_no()+" "+b.getContact()+" "+b.getAddress()+" "+b.getCountry()+" "+b.getPan_no()+" "+b.getCurrency());
+//Map<String,String> mm=p.getNostroAccounts("swift_id");
+//Iterator it = mm.entrySet().iterator();
+//while (it.hasNext()) {
+  //  Map.Entry pair = (Map.Entry)it.next();
+    //System.out.println(pair.getKey() + " = " + pair.getValue());}
 
+}
 
 }
