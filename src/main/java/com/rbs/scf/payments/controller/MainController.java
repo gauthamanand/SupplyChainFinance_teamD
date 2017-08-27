@@ -58,11 +58,11 @@ public class MainController {
     @Produces(MediaType.TEXT_PLAIN)
     public String postInititateTransaction(String data) throws ParseException, JSONException{
     	
-    	
+    	//System.out.println("fffffffff");
     	JSONObject newObj = new JSONObject(data);
     	String senderId = newObj.getString("sender");
     	double amount = newObj.getDouble("amount");
-    	String currency = newObj.getString("beneficiary");
+    	String currency = newObj.getString("currency");
     	String beneficiary = newObj.getString("beneficiary");
     	String accno = newObj.getString("accountNo");
     	String date = newObj.getString("date");

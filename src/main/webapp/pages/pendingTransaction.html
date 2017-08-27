@@ -324,7 +324,7 @@
                                     
 
 
-                                   <table style="width:100%">
+                                   <table style="width:100%;">
                                     <col width="30">
                                     <col width="80">
                                     <col width="80">
@@ -396,7 +396,7 @@
 			 var app = angular.module('PendingTransaction', []);
 			app.controller('PendingTransactionController', function($scope, $http){
 			
-                $http.get("http://localhost:8080/payments/services/getAllTransaction").then(function(response){
+                $http.get("http://localhost:8080/payments/services/Transactions/getAllTransaction").then(function(response){
             		$scope.transactionArray = response.data;        
                 });
                 

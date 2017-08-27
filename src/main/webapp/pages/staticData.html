@@ -114,23 +114,12 @@
                 border-radius: 20px;
             }
             th,td{
-                padding: 15px;
+                padding: 25px;
             }
-            .btnss{
+            .createInstitutions{
                 background-color:#3383FF ;
                 text-align: center;
                 color: white;
-                font-size: 18px;
-                margin-right: 4px;
-                margin-left:35px;
-            }
-
-            #alignMain{
-                padding-top:0px; 
-                height:1050px; 
-                border-radius: 20px; 
-                text-align: center; 
-                background-color:#555;                                                                                                                       
             }
 
             
@@ -141,6 +130,9 @@
     </head>
 
     <body>
+                    
+                    <script type="text/javascript" src="C:\Users\Administrator\Desktop\project\TeamD_UI\js\angular.min.js"></script>
+                    <script type="text/javascript" src="C:\Users\Administrator\Desktop\project\TeamD_UI\js\angular1.js" ></script>
 
         <div id="wrapper">
 
@@ -298,8 +290,8 @@
 
     <div style="margin-top: 10px">
         <div class="row">
-            <div class="col-sm-offset-1 col-sm-8 jumbotron" id="alignMain" style="padding-top:0px;
-            height:1100px; 
+            <div class="col-sm-offset-1 col-sm-8 jumbotron" id="alignMain" style="padding-top:0px; 
+            height:650px; 
             border-radius: 20px; 
             text-align: center; 
             background-color:#555">
@@ -310,7 +302,7 @@
                 <br><br>
                     <p style="font-size: 300%; 
                     color: white">
-                    <b>SWIFT MT-103 CONFIRMATION</b></p>
+                    <b>STATIC DATA</b></p>
                 </div>
             </div>
             <br><br>
@@ -328,80 +320,60 @@
                                    
                                 </div> -->
                                 <hr>
-                                <div class="media-body" >
+                                <div class="media-body" ng-app="MyApp" ng-controller="MyController">
                                     
 
-                                    <table style="width:100%">
-                                        <col width="50%">
+
+                                   <table style="width:100%">
+                                    <col width="30%">
+
+                                    <button type="button" class="createInstitutions" id="createInstitutions" onclick="window.open('../pages/createFinancialInstitution.html','_self')">CREATE A NEW FINANCIAL INSTITUTION</button>
+
+                                    <br>
+                                    <br>
                                         <tr>
-                                            <th> ENTITY </th>
-                                            <th> DATA </th> 
+                                            
+                                            <th>BANK ID</th>
+                                            <th>ENTITY NAME</th> 
+                                            
+
+                                            <th></th>
+                                                
+                                            </th>
                                         </tr>
                                         <tr>
-                                            <td>SENDER</td>
-                                            <td>ABCD LTD.</td> 
+                                            <td>20401</td> 
+                                            <td>Royal Bank of Scotland</td>
+                                            <td>
+                                                <button type="button" class="createInstitutions" id="button1" onclick="window.open('../pages/editFinancialInstitution.html','_self')">EDIT</button>
+
+                                                
+                                            </td>
                                         </tr>
+
                                         <tr>
-                                            <td>MESSAGE TYPE</td>
-                                            <td>103</td> 
+                                            <td>20405</td> 
+                                            <td>Goldman Sachs</td>
+                                            <td>
+                                                <button type="button" class="createInstitutions" id="button2" onclick="window.open('../pages/editFinancialInstitution.html','_self')">EDIT</button>
+
+                                                
+                                            </td>
                                         </tr>
+
                                         <tr>
-                                            <td>RECEIVER</td>
-                                            <td>XYZ PVT LTD.</td> 
+                                            <td>20409</td> 
+                                            <td>Morgan Stanley</td>
+                                            <td>
+                                                <button type="button" class="createInstitutions" id="button2" onclick="window.open('../pages/editFinancialInstitution.html','_self')"
+                                                >EDIT</button>
+
+                                                
+                                            </td>
                                         </tr>
-                                        <tr>
-                                            <td>MESSAGE TEXT</td>
-                                            <td></td> 
-                                        </tr>
-                                        <tr>
-                                            <td>SENDER'S REFERENCE</td>
-                                            <td>20:09345/123COV</td> 
-                                        </tr>
-                                        <tr>
-                                            <td>BANK OPERATION CODE</td>
-                                            <td>24B/CIDE</td> 
-                                        </tr>
-                                        <tr>
-                                            <td>VALUE DATE/CURRENCY CODE/AMOUNT</td>
-                                            <td>32A/09234USD15000</td> 
-                                        </tr>
-                                        <tr>
-                                            <td>CURRENCY/INSTRUCTED AMOUNT</td>
-                                            <td>33CUSD15000</td> 
-                                        </tr>
-                                        <tr>
-                                            <td>ORDERING CUSTOMER</td>
-                                            <td>50R/77 LONDON</td> 
-                                        </tr>
-                                        <tr>
-                                            <td>SENDER'S CORRESPONDENT</td>
-                                            <td>53A/CCCUS33</td> 
-                                        </tr>
-                                        <tr>
-                                            <td>RECEIVER'S CORRESPONDENT</td>
-                                            <td>54A:DDD33</td> 
-                                        </tr>
-                                        <tr>
-                                            <td>BENEFICIARY CUSTOMER</td>
-                                            <td>59F:57896: EDINBURGH</td> 
-                                        </tr>
-                                        <tr>
-                                            <td>REMITTANCE INFORMATION</td>
-                                            <td>70/INV/1234</td> 
-                                        </tr>
-                                        <tr>
-                                            <td>DETAILS OF CHARGERS</td>
-                                            <td>71A/SHA</td> 
-                                        </tr>
-                                        
-                                        
+                                       
                                     </table>
-                                    <br>
-                                    <br>
-                                    <button type="button" class="btnss" id="editButton" onclick="window.open('../pages/swiftMT103.html','_self')">EDIT</button>
-                                    <button type="button" class="btnss" id="confirmButton" >CONFIRM</button>
-
-
+                                   
 
                                  </div>
 

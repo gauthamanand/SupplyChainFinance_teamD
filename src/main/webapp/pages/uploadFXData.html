@@ -43,18 +43,26 @@
             input:focus{
                 outline-color:transparent;
             }
+            #foo{
+                width: 100px;
+                height: 35px;
+            }
             .MyInputDiv {
 
                 margin:auto;
                 border-radius:20px;
-                width: 90%;
+                width: 250px ;
+                height:40px;
+
             }
             .MyInputSpan {
                 border-radius: 20px 0px 0px 20px; 
-                width:310px;
+                
                 background-color: #337ab7;
                 color:#f5f5f5; 
                 border:0px;
+                width: 250px ;
+                height:40px;
             }
             .MyInputField{
                 border:0px;
@@ -69,7 +77,7 @@
             #LoginSubmitDiv {
                 position:;
                 height:30px;
-                margin:50px;
+                margin:40px;
             }
 
             #submitLogin {
@@ -101,38 +109,26 @@
             }
 
             .dropdown{
-                width: 256px;
+                width: 293px;
                 height:34px;
                 border-radius: 0px 20px 20px 0px;
 
             }
 
-            table, th, td {
+            .createInstitutions{
+                background-color:#3383FF ;
                 text-align: center;
-                border: 1px solid black;
-                background-color: white;
-                border-radius: 20px;
+                color: white;
             }
-            th,td{
-                padding: 15px;
-            }
+
             .btnss{
                 background-color:#3383FF ;
                 text-align: center;
                 color: white;
-                font-size: 18px;
                 margin-right: 4px;
                 margin-left:35px;
+                font-size: 18px;
             }
-
-            #alignMain{
-                padding-top:0px; 
-                height:1050px; 
-                border-radius: 20px; 
-                text-align: center; 
-                background-color:#555;                                                                                                                       
-            }
-
             
 
 
@@ -298,8 +294,8 @@
 
     <div style="margin-top: 10px">
         <div class="row">
-            <div class="col-sm-offset-1 col-sm-8 jumbotron" id="alignMain" style="padding-top:0px;
-            height:1100px; 
+            <div class="col-sm-offset-1 col-sm-8 jumbotron" id="alignMain" style="padding-top:0px; 
+            height:400px; 
             border-radius: 20px; 
             text-align: center; 
             background-color:#555">
@@ -310,7 +306,7 @@
                 <br><br>
                     <p style="font-size: 300%; 
                     color: white">
-                    <b>SWIFT MT-103 CONFIRMATION</b></p>
+                    <b>FX DATA</p>
                 </div>
             </div>
             <br><br>
@@ -329,116 +325,72 @@
                                 </div> -->
                                 <hr>
                                 <div class="media-body" >
+
+                                <br>
+                                <br>
                                     
+                                        <button type="button" class="btnss" id="uploadData">UPLOAD DATA</button>
 
-                                    <table style="width:100%">
-                                        <col width="50%">
-                                        <tr>
-                                            <th> ENTITY </th>
-                                            <th> DATA </th> 
-                                        </tr>
-                                        <tr>
-                                            <td>SENDER</td>
-                                            <td>ABCD LTD.</td> 
-                                        </tr>
-                                        <tr>
-                                            <td>MESSAGE TYPE</td>
-                                            <td>103</td> 
-                                        </tr>
-                                        <tr>
-                                            <td>RECEIVER</td>
-                                            <td>XYZ PVT LTD.</td> 
-                                        </tr>
-                                        <tr>
-                                            <td>MESSAGE TEXT</td>
-                                            <td></td> 
-                                        </tr>
-                                        <tr>
-                                            <td>SENDER'S REFERENCE</td>
-                                            <td>20:09345/123COV</td> 
-                                        </tr>
-                                        <tr>
-                                            <td>BANK OPERATION CODE</td>
-                                            <td>24B/CIDE</td> 
-                                        </tr>
-                                        <tr>
-                                            <td>VALUE DATE/CURRENCY CODE/AMOUNT</td>
-                                            <td>32A/09234USD15000</td> 
-                                        </tr>
-                                        <tr>
-                                            <td>CURRENCY/INSTRUCTED AMOUNT</td>
-                                            <td>33CUSD15000</td> 
-                                        </tr>
-                                        <tr>
-                                            <td>ORDERING CUSTOMER</td>
-                                            <td>50R/77 LONDON</td> 
-                                        </tr>
-                                        <tr>
-                                            <td>SENDER'S CORRESPONDENT</td>
-                                            <td>53A/CCCUS33</td> 
-                                        </tr>
-                                        <tr>
-                                            <td>RECEIVER'S CORRESPONDENT</td>
-                                            <td>54A:DDD33</td> 
-                                        </tr>
-                                        <tr>
-                                            <td>BENEFICIARY CUSTOMER</td>
-                                            <td>59F:57896: EDINBURGH</td> 
-                                        </tr>
-                                        <tr>
-                                            <td>REMITTANCE INFORMATION</td>
-                                            <td>70/INV/1234</td> 
-                                        </tr>
-                                        <tr>
-                                            <td>DETAILS OF CHARGERS</td>
-                                            <td>71A/SHA</td> 
-                                        </tr>
+                                    <button type="button" class="btnss" id="uploadLink" >UPLOAD VIA LINK</button>
                                         
                                         
-                                    </table>
-                                    <br>
-                                    <br>
-                                    <button type="button" class="btnss" id="editButton" onclick="window.open('../pages/swiftMT103.html','_self')">EDIT</button>
-                                    <button type="button" class="btnss" id="confirmButton" >CONFIRM</button>
 
 
 
-                                 </div>
-
-                            </div>
-
-                        </div>
-                <div class="col-sm-6">
 
 
-            </div>
-            </div>
-            </div>
-            </div>
-            </div>
-            </div>
-            <!-- /#wrapper -->
-
-            <!-- jQuery -->
-            <script src="../vendor/jquery/jquery.min.js"></script>
-
-            <!-- Bootstrap Core JavaScript -->
-            <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
-
-            <!-- Metis Menu Plugin JavaScript -->
-            <script src="../vendor/metisMenu/metisMenu.min.js"></script>
-
-            <!-- Morris Charts JavaScript -->
-            <script src="../vendor/raphael/raphael.min.js"></script>
-            <script src="../vendor/morrisjs/morris.min.js"></script>
-            <script src="../data/morris-data.js"></script>
-
-            <!-- Custom Theme JavaScript -->
-            <script src="../dist/js/sb-admin-2.js"></script>
 
 
-            </script>
+</div>
 
-    </body>
+
+
+</div>
+<br><Br><br><br>
+
+</form>
+
+
+
+</div>
+
+
+
+
+</div>
+
+</div>
+<div class="col-sm-6">
+
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- /#wrapper -->
+
+<!-- jQuery -->
+<script src="../vendor/jquery/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+
+<!-- Metis Menu Plugin JavaScript -->
+<script src="../vendor/metisMenu/metisMenu.min.js"></script>
+
+<!-- Morris Charts JavaScript -->
+<script src="../vendor/raphael/raphael.min.js"></script>
+<script src="../vendor/morrisjs/morris.min.js"></script>
+<script src="../data/morris-data.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="../dist/js/sb-admin-2.js"></script>
+
+
+</script>
+
+</body>
 
 </html>

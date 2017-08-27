@@ -101,36 +101,25 @@
             }
 
             .dropdown{
-                width: 256px;
+                width: 293px;
                 height:34px;
                 border-radius: 0px 20px 20px 0px;
 
             }
 
-            table, th, td {
+            .createInstitutions{
+                background-color:#3383FF ;
                 text-align: center;
-                border: 1px solid black;
-                background-color: white;
-                border-radius: 20px;
+                color: white;
             }
-            th,td{
-                padding: 15px;
-            }
+
             .btnss{
                 background-color:#3383FF ;
                 text-align: center;
                 color: white;
-                font-size: 18px;
                 margin-right: 4px;
                 margin-left:35px;
-            }
-
-            #alignMain{
-                padding-top:0px; 
-                height:1050px; 
-                border-radius: 20px; 
-                text-align: center; 
-                background-color:#555;                                                                                                                       
+                font-size: 18px;
             }
 
             
@@ -298,8 +287,8 @@
 
     <div style="margin-top: 10px">
         <div class="row">
-            <div class="col-sm-offset-1 col-sm-8 jumbotron" id="alignMain" style="padding-top:0px;
-            height:1100px; 
+            <div class="col-sm-offset-1 col-sm-8 jumbotron" id="alignMain" style="padding-top:0px; 
+            height:850px; 
             border-radius: 20px; 
             text-align: center; 
             background-color:#555">
@@ -310,7 +299,7 @@
                 <br><br>
                     <p style="font-size: 300%; 
                     color: white">
-                    <b>SWIFT MT-103 CONFIRMATION</b></p>
+                    <b>CREATE FINANCIAL INSTITUTION</b></p>
                 </div>
             </div>
             <br><br>
@@ -329,116 +318,132 @@
                                 </div> -->
                                 <hr>
                                 <div class="media-body" >
-                                    
+                                    <form>
+                                        <div class="input-group MyInputDiv">
+                                            <span class="input-group-addon MyInputSpan"><b>ENTITY NAME</b></span>
+                                            <input type="text" class="form-control MyInputField" id="entityName" name="entityName" />
+                                        </div>
+                                        <br>
+                                        <div class="input-group MyInputDiv">
+                                            <span class="input-group-addon MyInputSpan"><b>RESISTRATION NUMBER</b></span> 
+                                            <input type="number" class="form-control MyInputField" id="regNo" name="regNo" />
+                                        </div>
+                                        <br>
+                                        <div class="input-group MyInputDiv">
+                                            <span class="input-group-addon MyInputSpan"><b>DATE OF INCORPORATION</b></span>
+                                            <input type="date" class="form-control MyInputField" id="dateOfIncorp" name="dateOfIncorp" />
+                                        </div>
+                                        <br>
+                                        <div class="input-group MyInputDiv">
+                                            <span class="input-group-addon MyInputSpan"><b>REPORTING ENTITY CATEGORY</b></span>
+                                            <select name="bank" class=dropdown>
+                                                <option value="category1">CATEGORY 1   </option>
+                                                <option value="category2">CATEGORY 2 </option>
+                                                
+                                            </select>
+                                        </div>
+                                        <br>
+                                        <div class="input-group MyInputDiv">   
+                                            <span class="input-group-addon MyInputSpan"><b>REPORTING ENTITY TYPE</b></span> 
+                                            <select name="bank" class=dropdown>
+                                                <option value="type1">Type 1   </option>
+                                                <option value="type2">Type 2 </option>
+                                                
+                                            </select>
+                                        </div>
+                                        <br>
+                                        <div class="input-group MyInputDiv">
+                                            <span class="input-group-addon MyInputSpan"><b>PAN NUMBER</b></span> 
+                                            <input type="text" class="form-control MyInputField" id="panNo" name="panNo" />
+                                        </div>
 
-                                    <table style="width:100%">
-                                        <col width="50%">
-                                        <tr>
-                                            <th> ENTITY </th>
-                                            <th> DATA </th> 
-                                        </tr>
-                                        <tr>
-                                            <td>SENDER</td>
-                                            <td>ABCD LTD.</td> 
-                                        </tr>
-                                        <tr>
-                                            <td>MESSAGE TYPE</td>
-                                            <td>103</td> 
-                                        </tr>
-                                        <tr>
-                                            <td>RECEIVER</td>
-                                            <td>XYZ PVT LTD.</td> 
-                                        </tr>
-                                        <tr>
-                                            <td>MESSAGE TEXT</td>
-                                            <td></td> 
-                                        </tr>
-                                        <tr>
-                                            <td>SENDER'S REFERENCE</td>
-                                            <td>20:09345/123COV</td> 
-                                        </tr>
-                                        <tr>
-                                            <td>BANK OPERATION CODE</td>
-                                            <td>24B/CIDE</td> 
-                                        </tr>
-                                        <tr>
-                                            <td>VALUE DATE/CURRENCY CODE/AMOUNT</td>
-                                            <td>32A/09234USD15000</td> 
-                                        </tr>
-                                        <tr>
-                                            <td>CURRENCY/INSTRUCTED AMOUNT</td>
-                                            <td>33CUSD15000</td> 
-                                        </tr>
-                                        <tr>
-                                            <td>ORDERING CUSTOMER</td>
-                                            <td>50R/77 LONDON</td> 
-                                        </tr>
-                                        <tr>
-                                            <td>SENDER'S CORRESPONDENT</td>
-                                            <td>53A/CCCUS33</td> 
-                                        </tr>
-                                        <tr>
-                                            <td>RECEIVER'S CORRESPONDENT</td>
-                                            <td>54A:DDD33</td> 
-                                        </tr>
-                                        <tr>
-                                            <td>BENEFICIARY CUSTOMER</td>
-                                            <td>59F:57896: EDINBURGH</td> 
-                                        </tr>
-                                        <tr>
-                                            <td>REMITTANCE INFORMATION</td>
-                                            <td>70/INV/1234</td> 
-                                        </tr>
-                                        <tr>
-                                            <td>DETAILS OF CHARGERS</td>
-                                            <td>71A/SHA</td> 
-                                        </tr>
+                                        <br>
+                                        <div class="input-group MyInputDiv">
+                                            <span class="input-group-addon MyInputSpan"><b>REGULATOR NAME</b></span> 
+                                            <input type="text" class="form-control MyInputField" id="regName" name="regName" />
+                                        </div>
+
+                                        <br>
+                                        <div class="input-group MyInputDiv">
+                                            <span class="input-group-addon MyInputSpan"><b>HEAD OFFICE ADDRESS</b></span> 
+                                            <input type="text" class="form-control MyInputField" id="hoAddress" name="hoAddress" />
+                                        </div>
+                                        <br>
+                                        <div class="input-group MyInputDiv">
+                                            <span class="input-group-addon MyInputSpan"><b>DIRECTOR NAME</b></span> 
+                                            <input type="text" class="form-control MyInputField" id="directorName" name="directorName" />
+                                        </div>
+                                        <br>
+                                        <div class="input-group MyInputDiv">
+                                            <span class="input-group-addon MyInputSpan"><b>DIRECTOR CONTACT</b></span> 
+                                            <input type="text" class="form-control MyInputField" id="directorContact" name="directorContact" />
+                                        </div>
                                         
+                                        <br>
+                                        <div class="row">
+                                            <div class= "col-sm-offset-1 col-sm-10" id="LoginSubmitDiv">
+
+                                                <button type="button" id="createInstitutions" class="btnss" onclick="window.open('../pages/confirmFinancialInstData.html','_self')">SUBMIT</button>
+
+                                                <!-- The Modal -->
+                                                
                                         
-                                    </table>
-                                    <br>
-                                    <br>
-                                    <button type="button" class="btnss" id="editButton" onclick="window.open('../pages/swiftMT103.html','_self')">EDIT</button>
-                                    <button type="button" class="btnss" id="confirmButton" >CONFIRM</button>
 
 
 
-                                 </div>
-
-                            </div>
-
-                        </div>
-                <div class="col-sm-6">
 
 
-            </div>
-            </div>
-            </div>
-            </div>
-            </div>
-            </div>
-            <!-- /#wrapper -->
 
-            <!-- jQuery -->
-            <script src="../vendor/jquery/jquery.min.js"></script>
-
-            <!-- Bootstrap Core JavaScript -->
-            <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
-
-            <!-- Metis Menu Plugin JavaScript -->
-            <script src="../vendor/metisMenu/metisMenu.min.js"></script>
-
-            <!-- Morris Charts JavaScript -->
-            <script src="../vendor/raphael/raphael.min.js"></script>
-            <script src="../vendor/morrisjs/morris.min.js"></script>
-            <script src="../data/morris-data.js"></script>
-
-            <!-- Custom Theme JavaScript -->
-            <script src="../dist/js/sb-admin-2.js"></script>
+</div>
 
 
-            </script>
 
-    </body>
+</div>
+<br><Br><br><br>
+
+</form>
+
+
+
+</div>
+
+
+
+
+</div>
+
+</div>
+<div class="col-sm-6">
+
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- /#wrapper -->
+
+<!-- jQuery -->
+<script src="../vendor/jquery/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+
+<!-- Metis Menu Plugin JavaScript -->
+<script src="../vendor/metisMenu/metisMenu.min.js"></script>
+
+<!-- Morris Charts JavaScript -->
+<script src="../vendor/raphael/raphael.min.js"></script>
+<script src="../vendor/morrisjs/morris.min.js"></script>
+<script src="../data/morris-data.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="../dist/js/sb-admin-2.js"></script>
+
+
+</script>
+
+</body>
 
 </html>

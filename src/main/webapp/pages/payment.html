@@ -357,7 +357,7 @@
                                         <div class="input-group MyInputDiv">
                                             <span class="input-group-addon MyInputSpan" ><b>ACCOUNT TO DEBIT FROM</b></span> 
 
-                                            <select name="accountNo" class=dropdown>
+                                            <select name="accountNo" class=dropdown ng-model=accno>
                                                 <option value="acc1">1009090488   </option>
                                                 <option value="acc2">1040909034 </option>
                                                 
@@ -434,8 +434,8 @@
 
                                             var app = angular.module('pymntapp', []);
 
-                                            app.controller('pymntctrl', function($scope, $http){
-                                                $http.get("http://localhost:8080/payments/services/initTransaction?InvoiceId=3333").then(function(response){
+                                            app.controller('pymntctrl', function($scope, $http, $httpParamSerializerJQLike){
+                                                $http.get("http://localhost:8080/payments/services/Transactions/initTransaction?InvoiceId=3333").then(function(response){
                                                 	 var prefill = response.data;
                                                     $scope.buyerId = prefill.buyerId;
                                                     $scope.sellerId = prefill.sellerId;
@@ -445,14 +445,26 @@
                                                 })
                                                 
                                              
-											 $scope.sendFormData = function(){
-												console.log("Form being submitted");
-												$http.get("http://localhost:8080/payments/services/sendInitTransaction?sender="+$scope.buyerId+"&amount="+$scope.amount+"&currency="+$scope.currency+"&beneficiary="+$scope.sellerId+"&accountNo=1009090488&date="+$scope.date+"&details="+$scope.details+"&comments="+$scope.comments).then(function(response){
-                                                	 
-                                                    console.log(response.data);
-                                                })
+											 	$scope.sendFormData = function(){
+													console.log("Form being submitted");
+												
+													$http({
+											            method: 'POST',
+											            url: 'http://localhost:8080/payments/services/Transactions/initTransaction',
+											            headers: {'Content-Type': 'text/plain'},
+											            data: {
+															sender : $scope.buyerId,
+															amount : $scope.amount,
+															currency : $scope.currency,
+															beneficiary : $scope.sellerId,
+															accountNo : $scope.accno,
+															date : $scope.date,
+															details : $scope.details,
+															comments : $scope.comments
+														}
+											        }).then(function (response) {console.log(response.data)});
 											 
-                                            }});
+                                            	}});
                                         </script>
 
 
