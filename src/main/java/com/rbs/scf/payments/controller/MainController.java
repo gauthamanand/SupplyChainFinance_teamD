@@ -24,7 +24,7 @@ import com.rbs.scf.payments.model.core.*;
 import com.rbs.scf.payments.utils.*;
 import com.rbs.scf.payments.model.beans.*;
 
-@Path("/")
+@Path("/Transactions")
 
 public class MainController {
 
@@ -52,18 +52,23 @@ public class MainController {
     		return consumer.getInvoice(invoiceId);
     }
     
-    @GET
-    @Path("/sendInitTransaction")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String postInititateTransaction(@QueryParam("sender")String senderId,
-    		@QueryParam("amount")double amount,
-    		@QueryParam("currency")String currency,
-    		@QueryParam("beneficiary")String beneficiary,
-    		@QueryParam("accountNo")String accno,
-    		@QueryParam("date")String date,
-    		@QueryParam("details")String details,
-    		@QueryParam("comments")String comments
-    		) throws ParseException, JSONException{
+    @POST
+    @Path("/initTransaction")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.TEXT_PLAIN)
+    public String postInititateTransaction(String data) throws ParseException, JSONException{
+    	
+    	
+    	JSONObject newObj = new JSONObject(data);
+    	String senderId = newObj.getString("sender");
+    	double amount = newObj.getDouble("amount");
+    	String currency = newObj.getString("beneficiary");
+    	String beneficiary = newObj.getString("beneficiary");
+    	String accno = newObj.getString("accountNo");
+    	String date = newObj.getString("date");
+    	String details  = newObj.getString("details");
+    	String comments = newObj.getString("comments");
+    	
     	
     	Random generator= new Random();
     	int txnId = generator.nextInt(10000);
@@ -103,6 +108,9 @@ public class MainController {
     	JSONObject jsonObj =  pay.getTransaction(txnId);
     	return jsonObj.toString();
     }
+    
+    
+    
     
     
     
