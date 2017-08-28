@@ -36,14 +36,14 @@ public class MainController {
 	 * @throws JSONException 
      */
 	
-	
+	@Context HttpServletRequest request;
 	
 
     
     @GET 
     @Path("/initTransaction")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getInititateTransaction(@QueryParam("InvoiceId")int invoiceId,@Context HttpServletRequest request) throws JSONException
+    public String getInititateTransaction(@QueryParam("InvoiceId")int invoiceId) throws JSONException
     {
     		
     		ConsumeRestService consumer = new ConsumeRestService();
@@ -110,9 +110,52 @@ public class MainController {
     }
     
     
+    @POST
+    @Path("/setCurrentTransaction")
+    @Consumes(MediaType.TEXT_HTML)
+    @Produces(MediaType.TEXT_HTML)
+    public String setCurrentTransaction(int data)
+    {
+    	HttpSession ses = request.getSession();
+    	int transactionId = data;
+    	Payment pay = new Payment();
+    	
+    	JSONObject returnObj = pay.getTransaction(transactionId);
+    	ses.setAttribute("transactionObj", returnObj);
+    	
+    	return "Done";
+    }
     
+    @GET
+    @Path("/getCurrentTransaction")
+    @Produces(MediaType.TEXT_HTML)
+    public String getCurrentTransaction()
+    {
+    	HttpSession ses = request.getSession();
+    	return ((JSONObject)ses.getAttribute("transactionObj")).toString();
+    }
+    /*
     
-    
+    @POST
+    @Path("/submitSwiftMessage")
+    @Consumes(MediaType.TEXT_HTML)
+    @Produces(MediaType.TEXT_HTML)
+    public String submitSwiftMessage(String data) throws JSONException
+    {
+    	JSONObject newObj = new JSONObject(data);
+    	String messageCode = ;
+    	int transactionId = ;
+    	String sender ;
+    	String reciever;
+    	String messageTxt;
+    	String bankOperationcode;
+    	String senderRef;
+    	String interbankSettledAmpunt;
+    	String instructed_amount;
+    	String 
+    	return "Done";
+    }
+    */
     
     
 }

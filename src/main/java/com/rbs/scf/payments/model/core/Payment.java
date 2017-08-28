@@ -34,7 +34,7 @@ public class Payment {
 				JSONObject newObj = new JSONObject();
 				newObj.put("sender", txn.getPayer_id());
 				newObj.put("amount", txn.getAmount());
-				newObj.put("beneficiary", txn.getPayer_id());
+				newObj.put("beneficiary", txn.getPayee_id());
 				newObj.put("date", txn.getTransaction_date());
 				newObj.put("details", txn.getComments());
 				newObj.put("comments", txn.getComments());
@@ -42,15 +42,8 @@ public class Payment {
 				newObj.put("status", txn.getStatus());
 				newObj.put("message_code", txn.getMessage_code());
 				newObj.put("transaction_id", txn.getTransaction_id());
-				
 				toReturn.put(newObj);
-				
-			}
-			
-			
-			return toReturn;
-			
-			
+			}return toReturn;
 		}
 		catch(Exception e)
 		{
@@ -67,23 +60,50 @@ public class Payment {
 	{
 		try {
 			PaymentsImpl p = new PaymentsImpl();
-			Customer_Transaction txn = p.getCustomerTransactionDetails(transactionId);
-			
+			Customer_Transaction txn1 = p.getCustomerTransactionDetails(transactionId);
+			Bank_to_Customer txn2 = p.getBankToCustomerDetails(transactionId);
+			Customer_to_Bank txn3 = p.getCustomerToBankDetails(transactionId) ;
 			JSONObject newObj = new JSONObject();
-			newObj.put("sender", txn.getPayer_id());
-			newObj.put("amount", txn.getAmount());
-			newObj.put("beneficiary", txn.getPayer_id());
-			newObj.put("date", txn.getTransaction_date());
-			newObj.put("details", txn.getComments());
-			newObj.put("comments", txn.getComments());
-			newObj.put("aml_status", txn.getAml_status());
-			newObj.put("status", txn.getStatus());
-			newObj.put("message_code", txn.getMessage_code());
-			newObj.put("transaction_id", txn.getTransaction_id());
-				
-		
 			
-			
+			if(txn1!=null)
+			{
+				newObj.put("sender", txn1.getPayer_id());
+				newObj.put("amount", txn1.getAmount());
+				newObj.put("beneficiary", txn1.getPayee_id());
+				newObj.put("date", txn1.getTransaction_date());
+				newObj.put("details", txn1.getComments());
+				newObj.put("comments", txn1.getComments());
+				newObj.put("aml_status", txn1.getAml_status());
+				newObj.put("status", txn1.getStatus());
+				newObj.put("message_code", txn1.getMessage_code());
+				newObj.put("transaction_id", txn1.getTransaction_id());
+			}
+			else if(txn2!=null)
+			{
+				newObj.put("sender", txn2.getPayer_id());
+				newObj.put("amount", txn2.getAmount());
+				newObj.put("beneficiary", txn2.getPayee_id());
+				newObj.put("date", txn2.getTransaction_date());
+				newObj.put("details", txn2.getComments());
+				newObj.put("comments", txn2.getComments());
+				newObj.put("aml_status", txn2.getAml_status());
+				newObj.put("status", txn2.getStatus());
+				newObj.put("message_code", txn2.getMessage_code());
+				newObj.put("transaction_id", txn2.getTransaction_id());
+			}
+			else if(txn3!=null)
+			{
+				newObj.put("sender", txn3.getPayer_id());
+				newObj.put("amount", txn3.getAmount());
+				newObj.put("beneficiary", txn3.getPayee_id());
+				newObj.put("date", txn3.getTransaction_date());
+				newObj.put("details", txn3.getComments());
+				newObj.put("comments", txn3.getComments());
+				newObj.put("aml_status", txn3.getAml_status());
+				newObj.put("status", txn3.getStatus());
+				newObj.put("message_code", txn3.getMessage_code());
+				newObj.put("transaction_id", txn3.getTransaction_id());				
+			}
 			return newObj;
 			
 			
@@ -95,4 +115,8 @@ public class Payment {
 			return newObj;
 		}
 	}
+	
+	
+	
+	
 }
