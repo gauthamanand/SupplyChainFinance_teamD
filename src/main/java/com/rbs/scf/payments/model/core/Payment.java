@@ -117,6 +117,17 @@ public class Payment {
 	}
 	
 	
-	
+	public boolean createSwiftMessage(Swift smessage)
+	{
+		try{
+			PaymentsImpl p = new PaymentsImpl();
+			p.addSwift(smessage);
+			return true;
+		}
+		catch(Exception e){
+			System.out.println(e);
+			return false;
+		}
+	}
 	
 }

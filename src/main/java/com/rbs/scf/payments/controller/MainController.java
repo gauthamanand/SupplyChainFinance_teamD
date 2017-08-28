@@ -134,7 +134,7 @@ public class MainController {
     	HttpSession ses = request.getSession();
     	return ((JSONObject)ses.getAttribute("transactionObj")).toString();
     }
-    /*
+   
     
     @POST
     @Path("/submitSwiftMessage")
@@ -143,19 +143,30 @@ public class MainController {
     public String submitSwiftMessage(String data) throws JSONException
     {
     	JSONObject newObj = new JSONObject(data);
-    	String messageCode = ;
-    	int transactionId = ;
-    	String sender ;
-    	String reciever;
-    	String messageTxt;
-    	String bankOperationcode;
-    	String senderRef;
-    	String interbankSettledAmpunt;
-    	String instructed_amount;
-    	String 
-    	return "Done";
+    	String messageCode = newObj.getString("messageCode");
+    	int transactionId = newObj.getInt("transactionId");
+    	String sender = newObj.getString("sender");
+    	String reciever = newObj.getString("reciever");
+    	String messageTxt = newObj.getString("messageText");
+    	String bankOperationCode = newObj.getString("bankOperationCode");
+    	String senderRef = newObj.getString("senderRef");
+    	String interbankSettledAmount = newObj.getString("interbankSettledAmount");
+    	String instructedAmount = newObj.getString("instructedAmount");
+    	String orderingCustomer = newObj.getString("orderingCustomer");
+    	String beneficiaryCustomer = newObj.getString("beneficiaryCustomer");
+    	String senderCorrespondent = newObj.getString("senderCorrespondent");
+    	String recieverCorrespondent = newObj.getString("recieverCorrespondent");
+    	String remitInfo = newObj.getString("remitInfo");
+    	String detailsOfCharge = newObj.getString("detailsOfCharge");
+    	Payment pay = new Payment();
+    	
+    	Swift smessage = new Swift(messageCode,transactionId,sender,reciever,messageTxt,bankOperationCode,senderRef,interbankSettledAmount,instructedAmount,orderingCustomer,beneficiaryCustomer,senderCorrespondent,recieverCorrespondent,remitInfo,detailsOfCharge);
+    	if(pay.createSwiftMessage(smessage)) {
+    		return "success";
+    	}
+    	else return "failure";
     }
-    */
+    
     
     
 }
