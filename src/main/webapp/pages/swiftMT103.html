@@ -315,32 +315,32 @@
                                     <form>
                                         <div class="input-group MyInputDiv">
                                             <span class="input-group-addon MyInputSpan"><b>SENDER</b></span>
-                                            <input type="text" class="form-control MyInputField" id="sender" name="sender" />
+                                            <input type="text" class="form-control MyInputField" id="sender" name="sender" ng-model="send" />
                                         </div>
                                         <br>
                                         <div class="input-group MyInputDiv">
                                             <span class="input-group-addon MyInputSpan"><b>MESSAGE TYPE</b></span> 
-                                            <input type="text" class="form-control MyInputField" id="msgType" name="msgType" />
+                                            <input type="text" class="form-control MyInputField" id="msgType" name="msgType" ng-model="type" />
                                         </div>
                                         <br>
                                         <div class="input-group MyInputDiv">
                                             <span class="input-group-addon MyInputSpan"><b>RECEIVER</b></span>
-                                            <input type="text" class="form-control MyInputField" id="receiver" name="receiver" />
+                                            <input type="text" class="form-control MyInputField" id="receiver" name="receiver" ng-model="rcv" />
                                         </div>
                                         <br>
                                         <div class="input-group MyInputDiv">
                                             <span class="input-group-addon MyInputSpan"><b>MESSAGE TEXT</b></span>
-                                            <input type="text" class="form-control MyInputField" id="msgText103" name="msgText103" />
+                                            <input type="text" class="form-control MyInputField" id="msgText103" name="msgText103" ng-model="msgtxt" />
                                         </div>
                                         <br>
                                         <div class="input-group MyInputDiv">   
                                             <span class="input-group-addon MyInputSpan"><b>SENDER'S REFERENCE</b></span> 
-                                            <input type="text" class="form-control MyInputField" id="senderRef" name="senderRef" />
+                                            <input type="text" class="form-control MyInputField" id="senderRef" name="senderRef" ng-model="sendref" />
                                         </div>
                                         <br>
                                         <div class="input-group MyInputDiv">
                                             <span class="input-group-addon MyInputSpan"><b>BANK OPERATION CODE</b></span> 
-                                            <input type="text" class="form-control MyInputField" id="bankOperationCode" name="bankOperationCode" />
+                                            <input type="text" class="form-control MyInputField" id="bankOperationCode" name="bankOperationCode" ng-model="boc" />
                                         </div>
 
                                         <br>
@@ -427,6 +427,20 @@
 </div>
 </div>
 </div>
+
+<script>
+	var app = angular.module('pymntapp', []);
+
+	app.controller('pymntctrl', function($scope, $http, $httpParamSerializerJQLike){
+    	$http.get("http://localhost:8181/payments/services/Transactions/initTransaction?InvoiceId=3333").then(function(response){
+    	 	var prefill = response.data;
+       		$scope.buyerId = prefill.buyerId;
+        	$scope.sellerId = prefill.sellerId;
+        	$scope.amount = prefill.amount;
+        	$scope.currency = prefill.currency;
+        	$scope.date = prefill.dateOfPayment;
+    })
+</script>
 <!-- /#wrapper -->
 
 <!-- jQuery -->
