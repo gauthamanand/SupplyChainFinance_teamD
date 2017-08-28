@@ -13,7 +13,7 @@ public class ConsumeRestService {
 			Client client = Client.create();
 
 			WebResource webResource = client
-			   .resource("http://localhost:8080/payments/services/Stubs/GetInvoice?InvoiceId="+String.valueOf(invoiceId));
+			   .resource("http://localhost:8181/payments/services/Stubs/GetInvoice?InvoiceId="+String.valueOf(invoiceId));
 
 			ClientResponse response = webResource.accept("application/json")
 	                   .get(ClientResponse.class);

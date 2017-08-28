@@ -347,7 +347,7 @@
                                             <td>{{transaction.beneficiary}}</td>
                                             <td>{{transaction.currency}} {{transaction.amount}}</td>
                                             <td>
-                                                <button type="button" class="btns" id="btn1" ng-click="registerUser(10100);" onclick="window.open('../pages/swiftMT103.html','_self')">APPROVE</button>
+                                                <button type="button" class="btns" id="btn1" ng-click="approveTransaction(transaction.transaction_id);" onclick="window.open('../pages/swiftMT103.html','_self')" >APPROVE</button>
 
                                                 <script type="text/javascript">
                                                     console.log("tid1 value");
@@ -396,11 +396,22 @@
 			 var app = angular.module('PendingTransaction', []);
 			app.controller('PendingTransactionController', function($scope, $http){
 			
-                $http.get("http://localhost:8080/payments/services/Transactions/getAllTransaction").then(function(response){
+                $http.get("http://localhost:8181/payments/services/Transactions/getAllTransaction").then(function(response){
             		$scope.transactionArray = response.data;        
                 });
                 
-             
+                $scope.approveTransaction = function(transaction_id){
+					//console.log("Form being submitted");
+				
+					$http({
+			            method: 'POST',
+			            url: 'http://localhost:8181/payments/services/Transactions/setCurrentTransaction',
+			            headers: {'Content-Type': 'text/plain'},
+			            data: {
+							trns_id : transaction_id
+						}
+			        }).then(function (response) {console.log(response.data)});
+                } 
 			});
             </script>
 

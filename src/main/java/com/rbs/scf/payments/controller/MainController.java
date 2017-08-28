@@ -43,7 +43,7 @@ public class MainController {
     @GET 
     @Path("/initTransaction")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getInititateTransaction(@QueryParam("InvoiceId")int invoiceId,@Context HttpServletRequest request) throws JSONException
+    public String getInititateTransaction(@QueryParam("InvoiceId")int invoiceId) throws JSONException
     {
     		
     		ConsumeRestService consumer = new ConsumeRestService();
@@ -58,11 +58,11 @@ public class MainController {
     @Produces(MediaType.TEXT_PLAIN)
     public String postInititateTransaction(String data) throws ParseException, JSONException{
     	
-    	//System.out.println("fffffffff");
+    	
     	JSONObject newObj = new JSONObject(data);
     	String senderId = newObj.getString("sender");
     	double amount = newObj.getDouble("amount");
-    	String currency = newObj.getString("currency");
+    	String currency = newObj.getString("beneficiary");
     	String beneficiary = newObj.getString("beneficiary");
     	String accno = newObj.getString("accountNo");
     	String date = newObj.getString("date");
@@ -110,9 +110,59 @@ public class MainController {
     }
     
     
+    @POST
+    @Path("/setCurrentTransaction")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.TEXT_PLAIN)
+    public String setCurrentTransaction(String data,@Context HttpServletRequest request) throws JSONException
+    {
+    	HttpSession ses = request.getSession();
+    	
+    	JSONObject newObj = new JSONObject(data);
+    	String transactionId = newObj.getString("trns_id");
+    	Payment pay = new Payment();
+    	//System.out.println(transactionId);
+    	JSONObject returnObj = pay.getTransaction(Integer.parseInt(transactionId));
+    	ses.setAttribute("transactionObj", "yo");
+    	System.out.println(ses.getAttribute("transactionObj"));
+    	System.out.println("Showing attribute");
+    	return "Done";
+    }
     
+    @GET
+    @Path("/getCurrentTransaction")
+    @Produces(MediaType.TEXT_HTML)
+    public String getCurrentTransaction(@Context HttpServletRequest request)
+    {
+    	HttpSession ses = request.getSession(false);
+    	if(ses==null)
+    	{
+    		System.out.println("no session");
+    	}
+    	return (String)ses.getAttribute("transactionObj");
+    }
+    /*
     
-    
+    @POST
+    @Path("/submitSwiftMessage")
+    @Consumes(MediaType.TEXT_HTML)
+    @Produces(MediaType.TEXT_HTML)
+    public String submitSwiftMessage(String data) throws JSONException
+    {
+    	JSONObject newObj = new JSONObject(data);
+    	String messageCode = ;
+    	int transactionId = ;
+    	String sender ;
+    	String reciever;
+    	String messageTxt;
+    	String bankOperationcode;
+    	String senderRef;
+    	String interbankSettledAmpunt;
+    	String instructed_amount;
+    	String 
+    	return "Done";
+    }
+    */
     
     
 }

@@ -10,6 +10,8 @@
     <meta name="author" content="">
 
     <title>SB Admin 2 - Bootstrap Admin Theme</title>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 
     <!-- Bootstrap Core CSS -->
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -311,7 +313,7 @@
                                    
                                 </div> -->
                                 <hr>
-                                <div class="media-body" >
+                                <div class="media-body" ng-app="swftapp" ng-controller="swftctrl">
                                     <form>
                                         <div class="input-group MyInputDiv">
                                             <span class="input-group-addon MyInputSpan"><b>SENDER</b></span>
@@ -346,43 +348,43 @@
                                         <br>
                                         <div class="input-group MyInputDiv">
                                             <span class="input-group-addon MyInputSpan"><b>VALUE DATE/CURRENCY CODE/AMOUNT</b></span> 
-                                            <input type="text" class="form-control MyInputField" id="date103" name="date103" />
+                                            <input type="text" class="form-control MyInputField" id="date103" name="date103" ng-model="date" />
                                         </div>
 
                                         <br>
                                         <div class="input-group MyInputDiv">
                                             <span class="input-group-addon MyInputSpan"><b>CURRENCY/INSTRUCTED AMOUNT</b></span> 
-                                            <input type="text" class="form-control MyInputField" id="currency" name="currency" />
+                                            <input type="text" class="form-control MyInputField" id="currency" name="currency" ng-model="curr" />
                                         </div>
                                         <br>
                                         <div class="input-group MyInputDiv">
                                             <span class="input-group-addon MyInputSpan"><b>ORDERING CUSTOMER</b></span> 
-                                            <input type="text" class="form-control MyInputField" id="orderingCustomer" name="orderingCustomer" />
+                                            <input type="text" class="form-control MyInputField" id="orderingCustomer" name="orderingCustomer" ng-model="ordcust" />
                                         </div>
                                         <br>
                                         <div class="input-group MyInputDiv">
                                             <span class="input-group-addon MyInputSpan"><b>SENDER'S CORRESPONDENT</b></span> 
-                                            <input type="text" class="form-control MyInputField" id="senderCorres" name="senderCorres" />
+                                            <input type="text" class="form-control MyInputField" id="senderCorres" name="senderCorres" ng-model="scorr" />
                                         </div>
                                         <br>
                                         <div class="input-group MyInputDiv">
                                             <span class="input-group-addon MyInputSpan"><b>RECEIVER'S CORRESPONDENT</b></span> 
-                                            <input type="text" class="form-control MyInputField" id="receiverCorres" name="receiverCorres" />
+                                            <input type="text" class="form-control MyInputField" id="receiverCorres" name="receiverCorres" ng-model="rcorr"/>
                                         </div>
                                         <br>
                                         <div class="input-group MyInputDiv">
                                             <span class="input-group-addon MyInputSpan"><b>BENEFICIARY CUSTOMER</b></span>
-                                            <input type="text" class="form-control MyInputField" id="msgText" name="msgText" />
+                                            <input type="text" class="form-control MyInputField" id="benecust" name="benecust" ng-model="benecust" />
                                         </div>
                                         <br>
                                         <div class="input-group MyInputDiv">
                                             <span class="input-group-addon MyInputSpan"><b>REMITTANCE INFORMATION</b></span>
-                                            <input type="text" class="form-control MyInputField" id="remittanceInfo" name="remittanceInfo" />
+                                            <input type="text" class="form-control MyInputField" id="remittanceInfo" name="remittanceInfo" ng-model="rmtinf" />
                                         </div>
                                         <br>
                                         <div class="input-group MyInputDiv">
                                             <span class="input-group-addon MyInputSpan"><b>DETAILS OF CHARGERS</b></span>
-                                            <input type="text" class="form-control MyInputField" id="detailsOfChargers" name="detailsOfChargers" />
+                                            <input type="text" class="form-control MyInputField" id="detailsOfChargers" name="detailsOfChargers" ng-model="dtlschrgs" />
                                         </div>
                                         <br>
                                         <div class="row">
@@ -429,17 +431,27 @@
 </div>
 
 <script>
-	var app = angular.module('pymntapp', []);
+	var app = angular.module('swftapp', []);
 
-	app.controller('pymntctrl', function($scope, $http, $httpParamSerializerJQLike){
-    	$http.get("http://localhost:8181/payments/services/Transactions/initTransaction?InvoiceId=3333").then(function(response){
-    	 	var prefill = response.data;
-       		$scope.buyerId = prefill.buyerId;
-        	$scope.sellerId = prefill.sellerId;
-        	$scope.amount = prefill.amount;
-        	$scope.currency = prefill.currency;
+	app.controller('swftctrl', function($scope, $http){
+    	$http.get("http://localhost:8181/payments/services/Transactions/getCurrentTransaction").then(function(response){
+    	 /*	var prefill = response.data;
+       		$scope.send = prefill.sender;
+        	$scope.type = prefill.message_code;
+        	$scope.rcv = prefill.beneficiary;
+        	$scope.msgtxt = prefill.currency;
         	$scope.date = prefill.dateOfPayment;
-    })
+        	$scope.sendref = 
+        	$scope.boc
+        	$scope.curr
+        	$scope.benecust
+        	$scope.dtlschrgs
+        	$scope.ordcust
+        	$scope.scorr
+        	$scope.rcorr
+        	$scope.rmtinf*/
+        	console.log(response.data);
+    })});
 </script>
 <!-- /#wrapper -->
 
