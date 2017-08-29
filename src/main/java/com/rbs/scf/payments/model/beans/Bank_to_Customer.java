@@ -5,9 +5,12 @@ import java.sql.Date;
 public class Bank_to_Customer extends Transaction{
 private String payer_id;
 private String payee_id;
+
 public Bank_to_Customer(int transaction_id, String message_code, String currency_code, double amount,
-		Date transaction_date, String aml_status, String status, String comments, String payer_id, String payee_id) {
-	super(transaction_id, message_code, currency_code, amount, transaction_date, aml_status, status, comments);
+		Date transaction_date, String aml_status, String status, String comments,
+		String payer_account, String payee_Account, String payer_id, String payee_id) {
+	super(transaction_id, message_code, currency_code, amount, transaction_date, aml_status, status, comments,
+			payer_account, payee_Account);
 	this.payer_id = payer_id;
 	this.payee_id = payee_id;
 }

@@ -51,6 +51,15 @@ Customer_to_Bank[] getCustomerToBankDetailsbyDate(Date d);
 //getAllNostroAccountsforABank
 Map<String,String> getNostroAccounts(String swift_id);
 
+//update aml status of transaction
+boolean updateAmlStatus(int transaction_id, String status);
+
+//update status of transaction
+boolean updateTransactionStatus(int transaction_id,String status);
+
+//get bank currency
+String getBankCurrency(String swift_id);
+
 //add and get vostro accounts
 Vostro_Accounts[] getVostroAccounts(String swift_id);
 boolean addVostroAccount(Vostro_Accounts v);
