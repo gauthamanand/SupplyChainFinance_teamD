@@ -92,7 +92,7 @@ public class PaymentsImpl implements PaymentsDao {
 				ResultSet rs=stmt.executeQuery();
 				if( rs.first()){
 					 
-				Customer_Transaction t1=new Customer_Transaction(rs1.getInt(1),rs1.getString(2),rs1.getString(3),rs1.getDouble(4),rs1.getDate(5),rs1.getString(6),rs1.getString(7),rs1.getString(8),rs.getString(2),rs.getString(3));
+				Customer_Transaction t1=new Customer_Transaction(rs1.getInt(1),rs1.getString(2),rs1.getString(3),rs1.getDouble(4),rs1.getDate(5),rs1.getString(6),rs1.getString(7),rs1.getString(8),rs1.getString(9),rs1.getString(10),rs.getString(2),rs.getString(3));
 				b[i++]=t1;}
 			}
 			con.close();return b;
@@ -155,7 +155,7 @@ public class PaymentsImpl implements PaymentsDao {
 				ResultSet rs=stmt.executeQuery();
 				System.out.println("Hello"+count);
 				if( rs.first()){
-				Bank_to_Customer t1=new Bank_to_Customer(rs1.getInt(1),rs1.getString(2),rs1.getString(3),rs1.getDouble(4),rs1.getDate(5),rs1.getString(6),rs1.getString(7),rs1.getString(8),rs.getString(2),rs.getString(3));
+				Bank_to_Customer t1=new Bank_to_Customer(rs1.getInt(1),rs1.getString(2),rs1.getString(3),rs1.getDouble(4),rs1.getDate(5),rs1.getString(6),rs1.getString(7),rs1.getString(8),rs1.getString(9),rs1.getString(10),rs.getString(2),rs.getString(3));
 				b[i++]=t1;}
 			}
 			con.close();return b;
@@ -189,7 +189,7 @@ public class PaymentsImpl implements PaymentsDao {
 				ResultSet rs=stmt.executeQuery();
 				System.out.println("Hello"+count);
 				if( rs.first()){
-				Customer_to_Bank t1=new Customer_to_Bank(rs1.getInt(1),rs1.getString(2),rs1.getString(3),rs1.getDouble(4),rs1.getDate(5),rs1.getString(6),rs1.getString(7),rs1.getString(8),rs.getString(2),rs.getString(3));
+				Customer_to_Bank t1=new Customer_to_Bank(rs1.getInt(1),rs1.getString(2),rs1.getString(3),rs1.getDouble(4),rs1.getDate(5),rs1.getString(6),rs1.getString(7),rs1.getString(8),rs1.getString(9),rs1.getString(10),rs.getString(2),rs.getString(3));
 				b[i++]=t1;}
 			}
 			con.close();return b;
@@ -270,7 +270,7 @@ public Customer_Transaction getCustomerTransactionDetails(int transaction_id) {
 			ResultSet rs=stmt.executeQuery();
 			if( rs.first()){
 				 
-			t1=new Customer_Transaction(rs1.getInt(1),rs1.getString(2),rs1.getString(3),rs1.getDouble(4),rs1.getDate(5),rs1.getString(6),rs1.getString(7),rs1.getString(8),rs.getString(2),rs.getString(3));
+			t1=new Customer_Transaction(rs1.getInt(1),rs1.getString(2),rs1.getString(3),rs1.getDouble(4),rs1.getDate(5),rs1.getString(6),rs1.getString(7),rs1.getString(8),rs1.getString(9),rs1.getString(10),rs.getString(2),rs.getString(3));
 			}
 		}
 		con.close();return t1;
@@ -297,7 +297,7 @@ public Bank_to_Customer getBankToCustomerDetails(int transaction_id) {
 			ResultSet rs=stmt.executeQuery();
 			if( rs.first()){
 				 
-			t1=new Bank_to_Customer(rs1.getInt(1),rs1.getString(2),rs1.getString(3),rs1.getDouble(4),rs1.getDate(5),rs1.getString(6),rs1.getString(7),rs1.getString(8),rs.getString(2),rs.getString(3));
+			t1=new Bank_to_Customer(rs1.getInt(1),rs1.getString(2),rs1.getString(3),rs1.getDouble(4),rs1.getDate(5),rs1.getString(6),rs1.getString(7),rs1.getString(8),rs1.getString(9),rs1.getString(10),rs.getString(2),rs.getString(3));
 			}
 		}
 		con.close();return t1;
@@ -324,7 +324,7 @@ public Customer_to_Bank getCustomerToBankDetails(int transaction_id) {
 			ResultSet rs=stmt.executeQuery();
 			if( rs.first()){
 				 
-			t1=new Customer_to_Bank(rs1.getInt(1),rs1.getString(2),rs1.getString(3),rs1.getDouble(4),rs1.getDate(5),rs1.getString(6),rs1.getString(7),rs1.getString(8),rs.getString(2),rs.getString(3));
+			t1=new Customer_to_Bank(rs1.getInt(1),rs1.getString(2),rs1.getString(3),rs1.getDouble(4),rs1.getDate(5),rs1.getString(6),rs1.getString(7),rs1.getString(8),rs1.getString(9),rs1.getString(10),rs.getString(2),rs.getString(3));
 			}
 		}
 		con.close();return t1;
@@ -418,7 +418,7 @@ public boolean addCustomer_Transaction(Customer_Transaction ct) {
 	boolean s=false;
 	try {
 		Connection con=c.getConnection();
-		PreparedStatement stmt1=con.prepareStatement("insert into transaction values(?,?,?,?,?,?,?,?)",ResultSet.TYPE_SCROLL_SENSITIVE, 
+		PreparedStatement stmt1=con.prepareStatement("insert into transaction values(?,?,?,?,?,?,?,?,?,?)",ResultSet.TYPE_SCROLL_SENSITIVE, 
                 ResultSet.CONCUR_UPDATABLE);  
 		stmt1.setInt(1, ct.getTransaction_id());
 		stmt1.setString(2, ct.getMessage_code());
@@ -428,6 +428,8 @@ public boolean addCustomer_Transaction(Customer_Transaction ct) {
 		stmt1.setString(6, ct.getAml_status());
 		stmt1.setString(7, ct.getStatus());
 		stmt1.setString(8, ct.getComments());
+		stmt1.setString(9, ct.getPayer_account());
+		stmt1.setString(10, ct.getPayee_account());
 		int rs1=stmt1.executeUpdate();
 		System.out.println(rs1);
 		
@@ -455,7 +457,7 @@ public boolean addBank_to_Customer(Bank_to_Customer btc) {
 	boolean s=false;
 	try {
 		Connection con=c.getConnection();
-		PreparedStatement stmt1=con.prepareStatement("insert into transaction values(?,?,?,?,?,?,?,?)",ResultSet.TYPE_SCROLL_SENSITIVE, 
+		PreparedStatement stmt1=con.prepareStatement("insert into transaction values(?,?,?,?,?,?,?,?,?,?)",ResultSet.TYPE_SCROLL_SENSITIVE, 
                 ResultSet.CONCUR_UPDATABLE);  
 		stmt1.setInt(1, btc.getTransaction_id());
 		stmt1.setString(2, btc.getMessage_code());
@@ -465,6 +467,8 @@ public boolean addBank_to_Customer(Bank_to_Customer btc) {
 		stmt1.setString(6, btc.getAml_status());
 		stmt1.setString(7, btc.getStatus());
 		stmt1.setString(8, btc.getComments());
+		stmt1.setString(9, btc.getPayer_account());
+		stmt1.setString(10, btc.getPayee_account());
 		int rs1=stmt1.executeUpdate();
 		System.out.println(rs1);
 		
@@ -492,7 +496,7 @@ public boolean addCustomer_to_Bank(Customer_to_Bank ctb) {
 	boolean s=false;
 	try {
 		Connection con=c.getConnection();
-		PreparedStatement stmt1=con.prepareStatement("insert into transaction values(?,?,?,?,?,?,?,?)",ResultSet.TYPE_SCROLL_SENSITIVE, 
+		PreparedStatement stmt1=con.prepareStatement("insert into transaction values(?,?,?,?,?,?,?,?,?,?)",ResultSet.TYPE_SCROLL_SENSITIVE, 
                 ResultSet.CONCUR_UPDATABLE);  
 		stmt1.setInt(1, ctb.getTransaction_id());
 		stmt1.setString(2, ctb.getMessage_code());
@@ -502,6 +506,8 @@ public boolean addCustomer_to_Bank(Customer_to_Bank ctb) {
 		stmt1.setString(6, ctb.getAml_status());
 		stmt1.setString(7, ctb.getStatus());
 		stmt1.setString(8, ctb.getComments());
+		stmt1.setString(9, ctb.getPayer_account());
+		stmt1.setString(10, ctb.getPayee_account());
 		int rs1=stmt1.executeUpdate();
 		System.out.println(rs1);
 		
@@ -553,7 +559,7 @@ public Customer_Transaction[] getAllPendingCustomerTransactionDetails(String sta
 			ResultSet rs=stmt.executeQuery();
 			if( rs.first()){
 				 
-			Customer_Transaction t1=new Customer_Transaction(rs1.getInt(1),rs1.getString(2),rs1.getString(3),rs1.getDouble(4),rs1.getDate(5),rs1.getString(6),rs1.getString(7),rs1.getString(8),rs.getString(2),rs.getString(3));
+			Customer_Transaction t1=new Customer_Transaction(rs1.getInt(1),rs1.getString(2),rs1.getString(3),rs1.getDouble(4),rs1.getDate(5),rs1.getString(6),rs1.getString(7),rs1.getString(8),rs1.getString(9),rs1.getString(10),rs.getString(2),rs.getString(3));
 			b[i++]=t1;}
 		}
 		con.close();return b;
@@ -587,7 +593,7 @@ public Bank_to_Customer[] getAllPendingBankToCustomerDetails(String status) {
 			ResultSet rs=stmt.executeQuery();
 			System.out.println("Hello"+count);
 			if( rs.first()){
-			Bank_to_Customer t1=new Bank_to_Customer(rs1.getInt(1),rs1.getString(2),rs1.getString(3),rs1.getDouble(4),rs1.getDate(5),rs1.getString(6),rs1.getString(7),rs1.getString(8),rs.getString(2),rs.getString(3));
+			Bank_to_Customer t1=new Bank_to_Customer(rs1.getInt(1),rs1.getString(2),rs1.getString(3),rs1.getDouble(4),rs1.getDate(5),rs1.getString(6),rs1.getString(7),rs1.getString(8),rs1.getString(9),rs1.getString(10),rs.getString(2),rs.getString(3));
 			b[i++]=t1;}
 		}
 		con.close();return b;
@@ -621,7 +627,7 @@ public Customer_to_Bank[] getAllPendingCustomerToBankDetails(String status) {
 			ResultSet rs=stmt.executeQuery();
 			System.out.println("Hello"+count);
 			if( rs.first()){
-			Customer_to_Bank t1=new Customer_to_Bank(rs1.getInt(1),rs1.getString(2),rs1.getString(3),rs1.getDouble(4),rs1.getDate(5),rs1.getString(6),rs1.getString(7),rs1.getString(8),rs.getString(2),rs.getString(3));
+			Customer_to_Bank t1=new Customer_to_Bank(rs1.getInt(1),rs1.getString(2),rs1.getString(3),rs1.getDouble(4),rs1.getDate(5),rs1.getString(6),rs1.getString(7),rs1.getString(8),rs1.getString(9),rs1.getString(10),rs.getString(2),rs.getString(3));
 			b[i++]=t1;}
 		}
 		con.close();return b;
@@ -657,7 +663,7 @@ public Customer_Transaction[] getCustomerTransactionDetailsbyPayerId(String sid)
 			ResultSet rs=stmt.executeQuery();
 			if( rs.first()){
 				 
-			t1=new Customer_Transaction(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getDouble(4),rs.getDate(5),rs.getString(6),rs.getString(7),rs.getString(8),rs1.getString(2),rs1.getString(3));
+			t1=new Customer_Transaction(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getDouble(4),rs.getDate(5),rs.getString(6),rs.getString(7),rs.getString(8),rs1.getString(9),rs1.getString(10),rs1.getString(2),rs1.getString(3));
 			b[i++]=t1;
 			}
 		}
@@ -693,7 +699,7 @@ public Bank_to_Customer[] getBankToCustomerDetailsbyPayerId(String sid) {
 			ResultSet rs=stmt.executeQuery();
 			if( rs.first()){
 				 
-			t1=new Bank_to_Customer(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getDouble(4),rs.getDate(5),rs.getString(6),rs.getString(7),rs.getString(8),rs1.getString(2),rs1.getString(3));
+			t1=new Bank_to_Customer(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getDouble(4),rs.getDate(5),rs.getString(6),rs.getString(7),rs.getString(8),rs1.getString(9),rs1.getString(10),rs1.getString(2),rs1.getString(3));
 			b[i++]=t1;
 			}
 		}
@@ -729,7 +735,7 @@ public Customer_to_Bank[] getCustomerToBankDetailsbyPayerId(String sid) {
 			ResultSet rs=stmt.executeQuery();
 			if( rs.first()){
 				 
-			t1=new Customer_to_Bank(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getDouble(4),rs.getDate(5),rs.getString(6),rs.getString(7),rs.getString(8),rs1.getString(2),rs1.getString(3));
+			t1=new Customer_to_Bank(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getDouble(4),rs.getDate(5),rs.getString(6),rs.getString(7),rs.getString(8),rs1.getString(9),rs1.getString(10),rs1.getString(2),rs1.getString(3));
 			b[i++]=t1;
 			}
 		}
@@ -765,7 +771,7 @@ public Customer_Transaction[] getCustomerTransactionDetailsbyPayeeId(String sid)
 			ResultSet rs=stmt.executeQuery();
 			if( rs.first()){
 				 
-			t1=new Customer_Transaction(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getDouble(4),rs.getDate(5),rs.getString(6),rs.getString(7),rs.getString(8),rs1.getString(2),rs1.getString(3));
+			t1=new Customer_Transaction(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getDouble(4),rs.getDate(5),rs.getString(6),rs.getString(7),rs.getString(8),rs1.getString(9),rs1.getString(10),rs1.getString(2),rs1.getString(3));
 			b[i++]=t1;
 			}
 		}
@@ -801,7 +807,7 @@ public Bank_to_Customer[] getBankToCustomerDetailsbyPayeeId(String sid) {
 			ResultSet rs=stmt.executeQuery();
 			if( rs.first()){
 				 
-			t1=new Bank_to_Customer(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getDouble(4),rs.getDate(5),rs.getString(6),rs.getString(7),rs.getString(8),rs1.getString(2),rs1.getString(3));
+			t1=new Bank_to_Customer(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getDouble(4),rs.getDate(5),rs.getString(6),rs.getString(7),rs.getString(8),rs1.getString(9),rs1.getString(10),rs1.getString(2),rs1.getString(3));
 			b[i++]=t1;
 			}
 		}
@@ -837,7 +843,7 @@ public Customer_to_Bank[] getCustomerToBankDetailsbyPayeeId(String sid) {
 			ResultSet rs=stmt.executeQuery();
 			if( rs.first()){
 				 
-			t1=new Customer_to_Bank(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getDouble(4),rs.getDate(5),rs.getString(6),rs.getString(7),rs.getString(8),rs1.getString(2),rs1.getString(3));
+			t1=new Customer_to_Bank(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getDouble(4),rs.getDate(5),rs.getString(6),rs.getString(7),rs.getString(8),rs1.getString(9),rs1.getString(10),rs1.getString(2),rs1.getString(3));
 			b[i++]=t1;
 			}
 		}
@@ -873,7 +879,7 @@ public Customer_Transaction[] getCustomerTransactionDetailsbyDate(Date d) {
 			ResultSet rs=stmt.executeQuery();
 			if( rs.first()){
 				 
-			t1=new Customer_Transaction(rs1.getInt(1),rs1.getString(2),rs1.getString(3),rs1.getDouble(4),rs1.getDate(5),rs1.getString(6),rs1.getString(7),rs1.getString(8),rs.getString(2),rs.getString(3));
+			t1=new Customer_Transaction(rs1.getInt(1),rs1.getString(2),rs1.getString(3),rs1.getDouble(4),rs1.getDate(5),rs1.getString(6),rs1.getString(7),rs1.getString(8),rs1.getString(9),rs1.getString(10),rs.getString(2),rs.getString(3));
 			b[i++]=t1;
 			}
 		}
@@ -909,7 +915,7 @@ public Bank_to_Customer[] getBankToCustomerDetailsbyDate(Date d) {
 			ResultSet rs=stmt.executeQuery();
 			if( rs.first()){
 				 
-			t1=new Bank_to_Customer(rs1.getInt(1),rs1.getString(2),rs1.getString(3),rs1.getDouble(4),rs1.getDate(5),rs1.getString(6),rs1.getString(7),rs1.getString(8),rs.getString(2),rs.getString(3));
+			t1=new Bank_to_Customer(rs1.getInt(1),rs1.getString(2),rs1.getString(3),rs1.getDouble(4),rs1.getDate(5),rs1.getString(6),rs1.getString(7),rs1.getString(8),rs1.getString(9),rs1.getString(10),rs.getString(2),rs.getString(3));
 			b[i++]=t1;
 			}
 		}
@@ -945,7 +951,7 @@ public Customer_to_Bank[] getCustomerToBankDetailsbyDate(Date d) {
 			ResultSet rs=stmt.executeQuery();
 			if( rs.first()){
 				 
-			t1=new Customer_to_Bank(rs1.getInt(1),rs1.getString(2),rs1.getString(3),rs1.getDouble(4),rs1.getDate(5),rs1.getString(6),rs1.getString(7),rs1.getString(8),rs.getString(2),rs.getString(3));
+			t1=new Customer_to_Bank(rs1.getInt(1),rs1.getString(2),rs1.getString(3),rs1.getDouble(4),rs1.getDate(5),rs1.getString(6),rs1.getString(7),rs1.getString(8),rs1.getString(9),rs1.getString(10),rs.getString(2),rs.getString(3));
 			b[i++]=t1;
 			}
 		}
@@ -1239,6 +1245,73 @@ public Vostro_Accounts[] getAllVostroAccounts() {
 	return null;
 }
 
+@Override
+public boolean updateAmlStatus(int transaction_id,String status) {
+	boolean s=false;
+	try {
+		Connection con=c.getConnection();
+		PreparedStatement stmt1=con.prepareStatement("update transaction set aml_status=? where transaction_id=?",ResultSet.TYPE_SCROLL_SENSITIVE, 
+                ResultSet.CONCUR_UPDATABLE);  
+		stmt1.setInt(2, transaction_id);
+		stmt1.setString(1, status);
+		
+		int rs1=stmt1.executeUpdate();
+		System.out.println(rs1);
+		
+		if(rs1==1)  
+		{	
+					s=true;
+				
+			}
+		
+		con.close();
+		}
+		catch(Exception e){ System.out.println(e);}  
+	return s;
+}
+@Override
+public boolean updateTransactionStatus(int transaction_id,String status) {
+	boolean s=false;
+	try {
+		Connection con=c.getConnection();
+		PreparedStatement stmt1=con.prepareStatement("update transaction set status=? where transaction_id=?",ResultSet.TYPE_SCROLL_SENSITIVE, 
+                ResultSet.CONCUR_UPDATABLE);  
+		stmt1.setInt(2, transaction_id);
+		stmt1.setString(1, status);
+		
+		int rs1=stmt1.executeUpdate();
+		System.out.println(rs1);
+		
+		if(rs1==1)  
+		{	
+					s=true;
+				
+			}
+		
+		con.close();
+		}
+		catch(Exception e){ System.out.println(e);}  
+	return s;
+}
+@Override
+public String getBankCurrency(String swift_id) {
+	try {
+		Connection con=c.getConnection();
+		PreparedStatement stmt1=con.prepareStatement("select currency from bank where swift_id=?",ResultSet.TYPE_SCROLL_SENSITIVE, 
+                ResultSet.CONCUR_UPDATABLE); 
+		stmt1.setString(1, swift_id);
+		String retVal=null;
+		ResultSet rs1=stmt1.executeQuery(); 
+		while(rs1.next())  
+		{	
+			retVal=rs1.getString(1);
+		}
+		con.close();
+		return retVal;
+		}
+		catch(Exception e){ System.out.println(e);}  
+		return null;
+}
 
 public static void main(String[] args) throws ParseException {
 	PaymentsImpl p=new PaymentsImpl();
@@ -1257,7 +1330,6 @@ public static void main(String[] args) throws ParseException {
 	
 	/*p.addSanctionedCountry("hello","h");
 	p.addSanctionedName("abcd");
-	System.out.println(p.isPersonSanctioned("aakriti"));
 	System.out.println(p.isCountrySanctioned("hello"));
 	FXData[] fxd=new FXData[1];
 	FXData fxdd=new FXData();
@@ -1273,7 +1345,10 @@ public static void main(String[] args) throws ParseException {
 //while (it.hasNext()) {
   //  Map.Entry pair = (Map.Entry)it.next();
     //System.out.println(pair.getKey() + " = " + pair.getValue());}
-
+//System.out.println("Hello+"+p.updateAmlStatus(2, "Amlnotdone"));
+//System.out.println("Hello+"+p.updateTransactionStatus(500, "Pay Succ"));
+	//System.out.println("Hello "+p.getBankCurrency("swift_id"));
 }
+
 
 }
