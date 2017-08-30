@@ -33,6 +33,11 @@ Customer_Transaction[] getAllPendingCustomerTransactionDetails(String status);
 Bank_to_Customer[] getAllPendingBankToCustomerDetails(String status);
 Customer_to_Bank[] getAllPendingCustomerToBankDetails(String status);
 
+//to extract details of  transactions based on Aml Status
+Customer_Transaction[] getAllCustomerTransactionDetailsByAmlStatus(String status);
+Bank_to_Customer[] getAllBankToCustomerDetailsByAmlStatus(String status);
+Customer_to_Bank[] getAllCustomerToBankDetailsByAmlStatus(String status);
+
 //extract transactions based on payerId
 Customer_Transaction[] getCustomerTransactionDetailsbyPayerId(String sid);
 Bank_to_Customer[] getBankToCustomerDetailsbyPayerId(String sid);
