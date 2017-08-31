@@ -161,6 +161,10 @@ public class MainController {
     	Payment pay = new Payment();
     	
     	Swift smessage = new Swift(messageCode,transactionId,sender,reciever,messageTxt,bankOperationCode,senderRef,interbankSettledAmount,instructedAmount,orderingCustomer,beneficiaryCustomer,senderCorrespondent,recieverCorrespondent,remitInfo,detailsOfCharge);
+    	
+    	pay.checkAml(transactionId);
+    	
+    	
     	if(pay.createSwiftMessage(smessage)) {
     		return "success";
     	}

@@ -34,4 +34,21 @@ public class Stubs {
 		return newObj.toString();
 		
 	}
+	
+	
+	
+	@GET 
+	@Path("/GetUser")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getUser(@QueryParam("userid")int UserId) throws JSONException{
+		
+		System.out.println(UserId);
+		JSONObject newObj = new JSONObject();
+		newObj.put("userid",UserId);
+		newObj.put("country","IND");
+		newObj.put("name","Varun");
+		newObj.put("accno","ABCDEFGH");
+		return newObj.toString();
+		
+	}
 }

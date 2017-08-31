@@ -28,16 +28,13 @@ import com.rbs.scf.payments.model.beans.*;
 @Path("/AML")
 public class AMLCheck {
 	
-	@POST
+	@GET
 	@Path("/checkAML")
-	@Consumes(MediaType.TEXT_PLAIN)
+	
 	@Produces(MediaType.TEXT_PLAIN)
-	public String checkCountry(String data) throws JSONException
+	public String checkCountry(@QueryParam("country")String country,@QueryParam("userid")String userid) throws JSONException
 	{
-		JSONObject inputObj = new JSONObject(data);
 		
-		String country = inputObj.getString("country");
-		String userid = inputObj.getString("userid");
 		ServicesExtra s = new ServicesExtra();
 		return s.checkAML(country, userid).toString();
 				

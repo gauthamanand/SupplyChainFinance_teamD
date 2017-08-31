@@ -1,6 +1,7 @@
 package com.rbs.scf.payments.model.core;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import com.rbs.scf.payments.model.beans.*;
 import com.rbs.scf.payments.utils.*;
@@ -128,6 +129,24 @@ public class Payment {
 			System.out.println(e);
 			return false;
 		}
+	}
+	
+	public void checkAML(int transactionId) throws JSONException
+	{
+		JSONObject transObj = getTransaction(transactionId);
+		String sender = transObj.getString("sender");
+		String beneficiary = transObj.getString("beneficiary");
+		ConsumeRestService cons = new ConsumeRestService();
+	
+		//Get User country from user details
+		String AMLStatusSender =  cons.getAMLStatus(sender, "IND");
+		String AMLStatusBeneficiary = cons.getAMLStatus(sender, "CUB");
+		JSONObject senderStatus = new JSONObject(AMLStatusSender);
+		JSONObject beneficiaryStatus = new JSONObject(AMLStatusBeneficiary);
+		/*if(senderStatus.getString("status")=="success" && beneficiaryStatus.getString("status")=="success")
+		{
+			
+		}*/
 	}
 	
 }
