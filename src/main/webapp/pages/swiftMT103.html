@@ -115,19 +115,26 @@
                 width: 256px;
                 height:34px;
                 border-radius: 0px 20px 20px 0px;
-
+            }
+            
+            #alignMain{
+                padding-top:0px; 
+                height:1050px; 
+                border-radius: 20px; 
+                text-align: center; 
+                background-color:#555;                                                                                                                       
             }
 
             
 
 
 
-        </style>
+        </style> 
     </head>
 
     <body>
 
-        <div id="wrapper">
+        <div id="wrapper" ng-app="swftapp" ng-controller="swftctrl">
 
             <!-- Navigation -->
             <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
@@ -281,7 +288,7 @@
         </div>
     </nav>
 
-    <div style="margin-top: 10px">
+    <div style="margin-top: 10px" ng-hide="v1" >
         <div class="row">
             <div class="col-sm-offset-1 col-sm-8 jumbotron" id="alignMain" style="padding-top:0px; 
             height:1100px; 
@@ -290,12 +297,12 @@
             background-color:#555">
 
              <div class="row">
-                <div class="col-sm-12" style="background-color:#337ab7; b
-                order-radius: 20px 20px 0px 0px;">
+                <div class="col-sm-12" style="background-color:#337ab7; 
+                	border-radius: 20px 20px 0px 0px;">
                 <br><br>
                     <p style="font-size: 300%; 
                     color: white">
-                    <b>SWIFT MT-103</b></p>
+                    <b>SWIFT MESSAGE</b></p>
                 </div>
             </div>
             <br><br>
@@ -313,7 +320,7 @@
                                    
                                 </div> -->
                                 <hr>
-                                <div class="media-body" ng-app="swftapp" ng-controller="swftctrl">
+                                <div class="media-body" >
                                     <form>
                                         <div class="input-group MyInputDiv">
                                             <span class="input-group-addon MyInputSpan"><b>SENDER</b></span>
@@ -390,68 +397,163 @@
                                         <div class="row">
                                             <div class= "col-sm-offset-1 col-sm-10" id="LoginSubmitDiv">
 
-                                                <button type="button" id="myBtn" class="btnss" onclick="window.open('../pages/Swiftmt103Confirmation.html','_self')">SUBMIT</button>
+                                                <button type="button" id="myBtn" class="btnss" ng-click="func()">SUBMIT</button>
+											</div>
+										</div>
+										<br><Br><br><br>
+									</form>
+								</div>
+					</div>
+				</div>
+				<div class="col-sm-6"></div>
+			</div>
+		</div>
+	</div>
+	</div>
+	
+	<div style="margin-top: 10px" ng-hide="v2">
+        <div class="row">
+            <div class="col-sm-offset-1 col-sm-8 jumbotron" id="alignMain" style="padding-top:0px;
+            height:1100px; 
+            border-radius: 20px; 
+            text-align: center; 
+            background-color:#555">
 
-                                                <!-- The Modal -->
-                                                
+             <div class="row">
+                <div class="col-sm-12" style="background-color:#337ab7; 
+                	border-radius: 20px 20px 0px 0px;">
+                <br><br>
+                    <p style="font-size: 300%; 
+                    color: white">
+                    <b>SWIFT MESSAGE CONFIRMATION</b></p>
+                </div>
+            </div>
+            <br><br>
+
+            <div class="row">
+                <div class="col-sm-offset-1 col-sm-6" id="alignPayment">
+
+                    <div class="media" >
+
+                                <!-- <div class="media-left media-top" >
+                                    
+                                    <div class="media-object" style="background-color:white;border-radius:20px; width:100px;height: 100px;">
+                                       
+                                    </div>
+                                   
+                                </div> -->
+                                <hr>
+                                <div class="media-body" >
+                                    
+
+                                    <table style="width:100%">
+                                        <col width="50%">
+                                        <tr>
+                                            <th> ENTITY </th>
+                                            <th> DATA </th> 
+                                        </tr>
+                                        <tr>
+                                            <td>SENDER</td>
+                                            <td>ABCD LTD.</td> 
+                                        </tr>
+                                        <tr>
+                                            <td>MESSAGE TYPE</td>
+                                            <td>103</td> 
+                                        </tr>
+                                        <tr>
+                                            <td>RECEIVER</td>
+                                            <td>XYZ PVT LTD.</td> 
+                                        </tr>
+                                        <tr>
+                                            <td>MESSAGE TEXT</td>
+                                            <td></td> 
+                                        </tr>
+                                        <tr>
+                                            <td>SENDER'S REFERENCE</td>
+                                            <td>20:09345/123COV</td> 
+                                        </tr>
+                                        <tr>
+                                            <td>BANK OPERATION CODE</td>
+                                            <td>24B/CIDE</td> 
+                                        </tr>
+                                        <tr>
+                                            <td>VALUE DATE/CURRENCY CODE/AMOUNT</td>
+                                            <td>32A/09234USD15000</td> 
+                                        </tr>
+                                        <tr>
+                                            <td>CURRENCY/INSTRUCTED AMOUNT</td>
+                                            <td>33CUSD15000</td> 
+                                        </tr>
+                                        <tr>
+                                            <td>ORDERING CUSTOMER</td>
+                                            <td>50R/77 LONDON</td> 
+                                        </tr>
+                                        <tr>
+                                            <td>SENDER'S CORRESPONDENT</td>
+                                            <td>53A/CCCUS33</td> 
+                                        </tr>
+                                        <tr>
+                                            <td>RECEIVER'S CORRESPONDENT</td>
+                                            <td>54A:DDD33</td> 
+                                        </tr>
+                                        <tr>
+                                            <td>BENEFICIARY CUSTOMER</td>
+                                            <td>59F:57896: EDINBURGH</td> 
+                                        </tr>
+                                        <tr>
+                                            <td>REMITTANCE INFORMATION</td>
+                                            <td>70/INV/1234</td> 
+                                        </tr>
+                                        <tr>
+                                            <td>DETAILS OF CHARGERS</td>
+                                            <td>71A/SHA</td> 
+                                        </tr>
                                         
+                                        
+                                    </table>
+                                    <br>
+                                    <br>
+                                    <button type="button" class="btnss" id="editButton" onclick="window.open('../pages/swiftMT103.html','_self')">EDIT</button>
+                                    <button type="button" class="btnss" id="confirmButton" >CONFIRM</button>
 
 
 
+                                 </div>
+
+                            </div>
+
+                        </div>
+                <div class="col-sm-6">
 
 
-
-</div>
-
-
-
-</div>
-<br><Br><br><br>
-
-</form>
-
-
-
-</div>
-
-
-
-
-</div>
-
-</div>
-<div class="col-sm-6">
-
-
-</div>
-</div>
-</div>
-</div>
-</div>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
 </div>
 
 <script>
 	var app = angular.module('swftapp', []);
 
 	app.controller('swftctrl', function($scope, $http){
+		$scope.v2 = true; $scope.v1=false;
     	$http.get("http://localhost:8181/payments/services/Transactions/getCurrentTransaction").then(function(response){
-    	 /*	var prefill = response.data;
+    	 	var prefill = response.data;
        		$scope.send = prefill.sender;
         	$scope.type = prefill.message_code;
         	$scope.rcv = prefill.beneficiary;
-        	$scope.msgtxt = prefill.currency;
         	$scope.date = prefill.dateOfPayment;
-        	$scope.sendref = 
-        	$scope.boc
-        	$scope.curr
-        	$scope.benecust
-        	$scope.dtlschrgs
-        	$scope.ordcust
-        	$scope.scorr
-        	$scope.rcorr
-        	$scope.rmtinf*/
+        	$scope.curr = prefill.currency + ". " + prefill.amount;
+        	$scope.dtlschrgs = prefill.details;
         	console.log(response.data);
-    })});
+    	})
+    
+		$scope.func = function(){
+    		$scope.v1 = true;
+    		$scope.v2 = false;
+    	}
+	});
 </script>
 <!-- /#wrapper -->
 
@@ -471,9 +573,6 @@
 
 <!-- Custom Theme JavaScript -->
 <script src="../dist/js/sb-admin-2.js"></script>
-
-
-</script>
 
 </body>
 

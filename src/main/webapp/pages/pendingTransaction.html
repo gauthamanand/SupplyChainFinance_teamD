@@ -347,7 +347,7 @@
                                             <td>{{transaction.beneficiary}}</td>
                                             <td>{{transaction.currency}} {{transaction.amount}}</td>
                                             <td>
-                                                <button type="button" class="btns" id="btn1" ng-click="approveTransaction(transaction.transaction_id);" onclick="window.open('../pages/swiftMT103.html','_self')" >APPROVE</button>
+                                                <button type="button" class="btns" id="btn1" ng-click="approveTransaction(transaction.transaction_id);" >APPROVE</button>
 
                                                 <script type="text/javascript">
                                                     console.log("tid1 value");
@@ -410,7 +410,10 @@
 			            data: {
 							trns_id : transaction_id
 						}
-			        }).then(function (response) {console.log(response.data)});
+			        }).then(function (response) {
+			        	console.log(response.data)
+			        	window.open('../pages/swiftMT103.html','_self')
+			        	});
                 } 
 			});
             </script>

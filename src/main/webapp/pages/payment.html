@@ -378,7 +378,7 @@
                                         <br>
                                         <div class="input-group MyInputDiv">
                                             <span class="input-group-addon MyInputSpan"><b>ADDITIONAL MESSAGE TEXT</b></span>
-                                            <input type="text" class="form-control MyInputField" id="msgText" name="comments" ng-model=comments />
+                                            <input type="text" class="form-control MyInputField" id="msgText" name="comments" />
                                         </div>
                                         <br>
                                         <div class="row">
@@ -459,8 +459,7 @@
 															beneficiary : $scope.sellerId,
 															accountNo : $scope.accno,
 															date : $scope.date,
-															details : $scope.details,
-															comments : $scope.comments
+															details : $scope.details
 														}
 											        }).then(function (response) {console.log(response.data)});
 											 

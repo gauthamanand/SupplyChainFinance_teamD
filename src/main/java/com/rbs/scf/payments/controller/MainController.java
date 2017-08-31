@@ -62,19 +62,17 @@ public class MainController {
     	JSONObject newObj = new JSONObject(data);
     	String senderId = newObj.getString("sender");
     	double amount = newObj.getDouble("amount");
-    	String currency = newObj.getString("beneficiary");
+    	String currency = newObj.getString("currency");
     	String beneficiary = newObj.getString("beneficiary");
     	String accno = newObj.getString("accountNo");
     	String date = newObj.getString("date");
     	String details  = newObj.getString("details");
-    	String comments = newObj.getString("comments");
-    	
     	
     	Random generator= new Random();
     	int txnId = generator.nextInt(10000);
     	java.sql.Date sqlDate = java.sql.Date.valueOf(date);
     	
-    	Customer_Transaction newTrans = new Customer_Transaction(txnId, "104", currency, amount, sqlDate, null, null, comments, senderId,beneficiary );
+    	Customer_Transaction newTrans = new Customer_Transaction(txnId, "104", currency, amount, sqlDate, null, null, details, "12345", "54321", senderId, beneficiary);
     	Payment pay = new Payment();
     	JSONObject returnStatus = new JSONObject();
     	
@@ -96,6 +94,7 @@ public class MainController {
     {
     	Payment pay = new Payment();
     	JSONArray resultArray =  pay.getAllTransactions();
+    	System.out.println(resultArray);
     	return resultArray.toString();
     }
     
@@ -121,9 +120,9 @@ public class MainController {
     	JSONObject newObj = new JSONObject(data);
     	String transactionId = newObj.getString("trns_id");
     	Payment pay = new Payment();
-    	//System.out.println(transactionId);
+    	System.out.println(transactionId);
     	JSONObject returnObj = pay.getTransaction(Integer.parseInt(transactionId));
-    	ses.setAttribute("transactionObj", "yo");
+    	ses.setAttribute("transactionObj", returnObj);
     	System.out.println(ses.getAttribute("transactionObj"));
     	System.out.println("Showing attribute");
     	return "Done";
@@ -139,7 +138,8 @@ public class MainController {
     	{
     		System.out.println("no session");
     	}
-    	return (String)ses.getAttribute("transactionObj");
+    	//ses.getAttribute("transactionObj");
+    	return ses.getAttribute("transactionObj").toString();
     }
     /*
     

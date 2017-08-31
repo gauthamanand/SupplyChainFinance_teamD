@@ -77,6 +77,7 @@ public class Payment {
 				newObj.put("status", txn1.getStatus());
 				newObj.put("message_code", txn1.getMessage_code());
 				newObj.put("transaction_id", txn1.getTransaction_id());
+				newObj.put("currency", txn1.getCurrency_code());
 			}
 			else if(txn2!=null)
 			{
@@ -90,6 +91,7 @@ public class Payment {
 				newObj.put("status", txn2.getStatus());
 				newObj.put("message_code", txn2.getMessage_code());
 				newObj.put("transaction_id", txn2.getTransaction_id());
+				newObj.put("currency", txn2.getCurrency_code());
 			}
 			else if(txn3!=null)
 			{
@@ -102,7 +104,8 @@ public class Payment {
 				newObj.put("aml_status", txn3.getAml_status());
 				newObj.put("status", txn3.getStatus());
 				newObj.put("message_code", txn3.getMessage_code());
-				newObj.put("transaction_id", txn3.getTransaction_id());				
+				newObj.put("transaction_id", txn3.getTransaction_id());
+				newObj.put("currency", txn3.getCurrency_code());
 			}
 			return newObj;
 			

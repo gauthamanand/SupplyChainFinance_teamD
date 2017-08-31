@@ -71,18 +71,35 @@ public class PaymentsImpl implements PaymentsDao {
 		try {
 			Connection con=c.getConnection();
 			Statement stmt1=con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, 
+<<<<<<< HEAD
+			               ResultSet.CONCUR_UPDATABLE);  
+=======
 	                ResultSet.CONCUR_UPDATABLE);  
+>>>>>>> 28e4a68bd781ac2a0a8ea37ab0e2116891f44de1
 			ResultSet rs=stmt1.executeQuery("select * from customer_transaction");
 			int i=0,count=0;
 			//System.out.println("Hello"+count);
 			while (rs.next())
 			{
-			    // Process the row.
-			    count++;
+			   // Process the row.
+			   count++;
 			}
 			rs.beforeFirst();
 			Customer_Transaction b[]=new Customer_Transaction[count];
 			while(rs.next())  
+<<<<<<< HEAD
+			{ 
+			int s1=rs.getInt(1);
+			PreparedStatement stmt=con.prepareStatement("select * from transaction where transaction_id=?",ResultSet.TYPE_SCROLL_SENSITIVE, 
+			               ResultSet.CONCUR_UPDATABLE); 
+			stmt.setInt(1, s1);
+			System.out.println("Hello"+count);
+			ResultSet rs1=stmt.executeQuery();
+			if( rs1.first()){
+			 
+			Customer_Transaction t1=new Customer_Transaction(rs1.getInt(1),rs1.getString(2),rs1.getString(3),rs1.getDouble(4),rs1.getDate(5),rs1.getString(6),rs1.getString(7),rs1.getString(8),rs1.getString(9),rs1.getString(10),rs.getString(2),rs.getString(3));
+			b[i++]=t1;}
+=======
 			{	
 				int s1=rs.getInt(1);
 				PreparedStatement stmt=con.prepareStatement("select * from transaction where transaction_id=?",ResultSet.TYPE_SCROLL_SENSITIVE, 
@@ -94,6 +111,7 @@ public class PaymentsImpl implements PaymentsDao {
 					 
 				Customer_Transaction t1=new Customer_Transaction(rs1.getInt(1),rs1.getString(2),rs1.getString(3),rs1.getDouble(4),rs1.getDate(5),rs1.getString(6),rs1.getString(7),rs1.getString(8),rs1.getString(9),rs1.getString(10),rs.getString(2),rs.getString(3));
 				b[i++]=t1;}
+>>>>>>> 28e4a68bd781ac2a0a8ea37ab0e2116891f44de1
 			}
 			con.close();return b;
 			}
