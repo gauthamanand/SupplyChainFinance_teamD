@@ -36,7 +36,7 @@ public class MainController {
 	 * @throws JSONException 
      */
 	
-	
+	@Context HttpServletRequest request;
 	
 
     
@@ -58,7 +58,7 @@ public class MainController {
     @Produces(MediaType.TEXT_PLAIN)
     public String postInititateTransaction(String data) throws ParseException, JSONException{
     	
-    	
+    	//System.out.println("fffffffff");
     	JSONObject newObj = new JSONObject(data);
     	String senderId = newObj.getString("sender");
     	double amount = newObj.getDouble("amount");
@@ -67,12 +67,14 @@ public class MainController {
     	String accno = newObj.getString("accountNo");
     	String date = newObj.getString("date");
     	String details  = newObj.getString("details");
+    	String comments = newObj.getString("comments");
+    	
     	
     	Random generator= new Random();
     	int txnId = generator.nextInt(10000);
     	java.sql.Date sqlDate = java.sql.Date.valueOf(date);
     	
-    	Customer_Transaction newTrans = new Customer_Transaction(txnId, "104", currency, amount, sqlDate, null, null, details, "12345", "54321", senderId, beneficiary);
+    	Customer_Transaction newTrans = new Customer_Transaction(txnId, "104", currency, amount, sqlDate, null, null, comments, senderId,beneficiary );
     	Payment pay = new Payment();
     	JSONObject returnStatus = new JSONObject();
     	
@@ -94,7 +96,6 @@ public class MainController {
     {
     	Payment pay = new Payment();
     	JSONArray resultArray =  pay.getAllTransactions();
-    	System.out.println(resultArray);
     	return resultArray.toString();
     }
     
@@ -111,37 +112,29 @@ public class MainController {
     
     @POST
     @Path("/setCurrentTransaction")
-    @Consumes(MediaType.TEXT_PLAIN)
-    @Produces(MediaType.TEXT_PLAIN)
-    public String setCurrentTransaction(String data,@Context HttpServletRequest request) throws JSONException
+    @Consumes(MediaType.TEXT_HTML)
+    @Produces(MediaType.TEXT_HTML)
+    public String setCurrentTransaction(int data)
     {
     	HttpSession ses = request.getSession();
-    	
-    	JSONObject newObj = new JSONObject(data);
-    	String transactionId = newObj.getString("trns_id");
+    	int transactionId = data;
     	Payment pay = new Payment();
-    	System.out.println(transactionId);
-    	JSONObject returnObj = pay.getTransaction(Integer.parseInt(transactionId));
+    	
+    	JSONObject returnObj = pay.getTransaction(transactionId);
     	ses.setAttribute("transactionObj", returnObj);
-    	System.out.println(ses.getAttribute("transactionObj"));
-    	System.out.println("Showing attribute");
+    	
     	return "Done";
     }
     
     @GET
     @Path("/getCurrentTransaction")
     @Produces(MediaType.TEXT_HTML)
-    public String getCurrentTransaction(@Context HttpServletRequest request)
+    public String getCurrentTransaction()
     {
-    	HttpSession ses = request.getSession(false);
-    	if(ses==null)
-    	{
-    		System.out.println("no session");
-    	}
-    	//ses.getAttribute("transactionObj");
-    	return ses.getAttribute("transactionObj").toString();
+    	HttpSession ses = request.getSession();
+    	return ((JSONObject)ses.getAttribute("transactionObj")).toString();
     }
-    /*
+   
     
     @POST
     @Path("/submitSwiftMessage")
@@ -150,19 +143,34 @@ public class MainController {
     public String submitSwiftMessage(String data) throws JSONException
     {
     	JSONObject newObj = new JSONObject(data);
-    	String messageCode = ;
-    	int transactionId = ;
-    	String sender ;
-    	String reciever;
-    	String messageTxt;
-    	String bankOperationcode;
-    	String senderRef;
-    	String interbankSettledAmpunt;
-    	String instructed_amount;
-    	String 
-    	return "Done";
+    	String messageCode = newObj.getString("messageCode");
+    	int transactionId = newObj.getInt("transactionId");
+    	String sender = newObj.getString("sender");
+    	String reciever = newObj.getString("reciever");
+    	String messageTxt = newObj.getString("messageText");
+    	String bankOperationCode = newObj.getString("bankOperationCode");
+    	String senderRef = newObj.getString("senderRef");
+    	String interbankSettledAmount = newObj.getString("interbankSettledAmount");
+    	String instructedAmount = newObj.getString("instructedAmount");
+    	String orderingCustomer = newObj.getString("orderingCustomer");
+    	String beneficiaryCustomer = newObj.getString("beneficiaryCustomer");
+    	String senderCorrespondent = newObj.getString("senderCorrespondent");
+    	String recieverCorrespondent = newObj.getString("recieverCorrespondent");
+    	String remitInfo = newObj.getString("remitInfo");
+    	String detailsOfCharge = newObj.getString("detailsOfCharge");
+    	Payment pay = new Payment();
+    	
+    	Swift smessage = new Swift(messageCode,transactionId,sender,reciever,messageTxt,bankOperationCode,senderRef,interbankSettledAmount,instructedAmount,orderingCustomer,beneficiaryCustomer,senderCorrespondent,recieverCorrespondent,remitInfo,detailsOfCharge);
+    	
+    	pay.checkAml(transactionId);
+    	
+    	
+    	if(pay.createSwiftMessage(smessage)) {
+    		return "success";
+    	}
+    	else return "failure";
     }
-    */
+    
     
     
 }

@@ -1,6 +1,7 @@
 package com.rbs.scf.payments.model.core;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import com.rbs.scf.payments.model.beans.*;
 import com.rbs.scf.payments.utils.*;
@@ -77,7 +78,6 @@ public class Payment {
 				newObj.put("status", txn1.getStatus());
 				newObj.put("message_code", txn1.getMessage_code());
 				newObj.put("transaction_id", txn1.getTransaction_id());
-				newObj.put("currency", txn1.getCurrency_code());
 			}
 			else if(txn2!=null)
 			{
@@ -91,7 +91,6 @@ public class Payment {
 				newObj.put("status", txn2.getStatus());
 				newObj.put("message_code", txn2.getMessage_code());
 				newObj.put("transaction_id", txn2.getTransaction_id());
-				newObj.put("currency", txn2.getCurrency_code());
 			}
 			else if(txn3!=null)
 			{
@@ -104,8 +103,7 @@ public class Payment {
 				newObj.put("aml_status", txn3.getAml_status());
 				newObj.put("status", txn3.getStatus());
 				newObj.put("message_code", txn3.getMessage_code());
-				newObj.put("transaction_id", txn3.getTransaction_id());
-				newObj.put("currency", txn3.getCurrency_code());
+				newObj.put("transaction_id", txn3.getTransaction_id());				
 			}
 			return newObj;
 			
@@ -120,6 +118,35 @@ public class Payment {
 	}
 	
 	
+	public boolean createSwiftMessage(Swift smessage)
+	{
+		try{
+			PaymentsImpl p = new PaymentsImpl();
+			p.addSwift(smessage);
+			return true;
+		}
+		catch(Exception e){
+			System.out.println(e);
+			return false;
+		}
+	}
 	
+	public void checkAML(int transactionId) throws JSONException
+	{
+		JSONObject transObj = getTransaction(transactionId);
+		String sender = transObj.getString("sender");
+		String beneficiary = transObj.getString("beneficiary");
+		ConsumeRestService cons = new ConsumeRestService();
+	
+		//Get User country from user details
+		String AMLStatusSender =  cons.getAMLStatus(sender, "IND");
+		String AMLStatusBeneficiary = cons.getAMLStatus(sender, "CUB");
+		JSONObject senderStatus = new JSONObject(AMLStatusSender);
+		JSONObject beneficiaryStatus = new JSONObject(AMLStatusBeneficiary);
+		/*if(senderStatus.getString("status")=="success" && beneficiaryStatus.getString("status")=="success")
+		{
+			
+		}*/
+	}
 	
 }
