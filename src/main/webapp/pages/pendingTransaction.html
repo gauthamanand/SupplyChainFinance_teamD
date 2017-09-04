@@ -396,7 +396,7 @@
 			 var app = angular.module('PendingTransaction', []);
 			app.controller('PendingTransactionController', function($scope, $http){
 			
-                $http.get("http://localhost:8181/payments/services/Transactions/getAllTransaction").then(function(response){
+                $http.get("http://localhost:8089/payments/services/Transactions/getAllTransaction").then(function(response){
             		$scope.transactionArray = response.data;        
                 });
                 
@@ -405,7 +405,7 @@
 				
 					$http({
 			            method: 'POST',
-			            url: 'http://localhost:8181/payments/services/Transactions/setCurrentTransaction',
+			            url: 'http://localhost:8089/payments/services/Transactions/setCurrentTransaction',
 			            headers: {'Content-Type': 'text/plain'},
 			            data: {
 							trns_id : transaction_id

@@ -34,11 +34,7 @@ public class AMLCheck {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String checkCountry(@QueryParam("country")String country,@QueryParam("userid")String userid) throws JSONException
 	{
-		
 		ServicesExtra s = new ServicesExtra();
-		return s.checkAML(country, userid).toString();
-				
+		return s.checkAML(country, userid).toString();			
 	}
-	
-	
 }

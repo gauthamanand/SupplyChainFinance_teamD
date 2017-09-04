@@ -5,6 +5,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import com.rbs.scf.payments.model.beans.*;
 import com.rbs.scf.payments.utils.*;
+
+
+
 import com.rbs.scf.payments.model.dao.PaymentsImpl;
 public class Payment {
 	
@@ -137,16 +140,32 @@ public class Payment {
 		String sender = transObj.getString("sender");
 		String beneficiary = transObj.getString("beneficiary");
 		ConsumeRestService cons = new ConsumeRestService();
-	
+		PaymentsImpl p = new PaymentsImpl(); 
 		//Get User country from user details
 		String AMLStatusSender =  cons.getAMLStatus(sender, "IND");
 		String AMLStatusBeneficiary = cons.getAMLStatus(sender, "CUB");
 		JSONObject senderStatus = new JSONObject(AMLStatusSender);
 		JSONObject beneficiaryStatus = new JSONObject(AMLStatusBeneficiary);
-		/*if(senderStatus.getString("status")=="success" && beneficiaryStatus.getString("status")=="success")
+		if(senderStatus.getString("status")=="success" && beneficiaryStatus.getString("status")=="success")
 		{
-			
-		}*/
+			p.updateAmlStatus(transactionId, Constants.AML_DONE);
+			p.updateTransactionStatus(transactionId, Constants.PAYMENT_SUCCESS);
+		}
+		else
+		{
+			p.updateAmlStatus(transactionId, Constants.AML_FAILED);
+			p.updateTransactionStatus(transactionId, Constants.AWAITING_APPROVAL);
+		}
+		if(beneficiaryStatus.getString("status")=="success" && beneficiaryStatus.getString("status")=="success")
+		{
+			p.updateAmlStatus(transactionId, Constants.AML_DONE);
+			p.updateTransactionStatus(transactionId, Constants.PAYMENT_SUCCESS);
+		}
+		else
+		{
+			p.updateAmlStatus(transactionId, Constants.AML_FAILED);
+			p.updateTransactionStatus(transactionId, Constants.AWAITING_APPROVAL);
+		}
 	}
 	
 }

@@ -435,7 +435,7 @@
                                             var app = angular.module('pymntapp', []);
 
                                             app.controller('pymntctrl', function($scope, $http, $httpParamSerializerJQLike){
-                                                $http.get("http://localhost:8181/payments/services/Transactions/initTransaction?InvoiceId=3333").then(function(response){
+                                                $http.get("http://localhost:8089/payments/services/Transactions/initTransaction?InvoiceId=3333").then(function(response){
                                                 	 var prefill = response.data;
                                                     $scope.buyerId = prefill.buyerId;
                                                     $scope.sellerId = prefill.sellerId;
@@ -450,7 +450,7 @@
 												
 													$http({
 											            method: 'POST',
-											            url: 'http://localhost:8181/payments/services/Transactions/initTransaction',
+											            url: 'http://localhost:8089/payments/services/Transactions/initTransaction',
 											            headers: {'Content-Type': 'text/plain'},
 											            data: {
 															sender : $scope.buyerId,

@@ -67,14 +67,14 @@ public class MainController {
     	String accno = newObj.getString("accountNo");
     	String date = newObj.getString("date");
     	String details  = newObj.getString("details");
-    	String comments = newObj.getString("comments");
+    //	String comments = newObj.getString("comments");
     	
     	
     	Random generator= new Random();
     	int txnId = generator.nextInt(10000);
     	java.sql.Date sqlDate = java.sql.Date.valueOf(date);
     	
-    	Customer_Transaction newTrans = new Customer_Transaction(txnId, "104", currency, amount, sqlDate, null, null, comments, senderId,beneficiary );
+    	Customer_Transaction newTrans = new Customer_Transaction(txnId, "104", currency, amount, sqlDate, null, null, details,"12345","54321", senderId,beneficiary );
     	Payment pay = new Payment();
     	JSONObject returnStatus = new JSONObject();
     	
@@ -112,36 +112,42 @@ public class MainController {
     
     @POST
     @Path("/setCurrentTransaction")
-    @Consumes(MediaType.TEXT_HTML)
-    @Produces(MediaType.TEXT_HTML)
-    public String setCurrentTransaction(int data)
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.TEXT_PLAIN)
+    public String setCurrentTransaction(String data,@Context HttpServletRequest request) throws JSONException
     {
     	HttpSession ses = request.getSession();
-    	int transactionId = data;
+    	
+    	JSONObject newObj = new JSONObject(data);
+    	String transactionId = newObj.getString("trns_id");
     	Payment pay = new Payment();
-    	
-    	JSONObject returnObj = pay.getTransaction(transactionId);
+    	System.out.println(transactionId);
+    	JSONObject returnObj = pay.getTransaction(Integer.parseInt(transactionId));
     	ses.setAttribute("transactionObj", returnObj);
-    	
+    	System.out.println(ses.getAttribute("transactionObj"));
+    	System.out.println("Showing attribute");
     	return "Done";
     }
-    
     @GET
     @Path("/getCurrentTransaction")
     @Produces(MediaType.TEXT_HTML)
     public String getCurrentTransaction()
     {
+    	
     	HttpSession ses = request.getSession();
+    	System.out.println(ses.getAttribute("transactionObj"));
+    	System.out.println("Showing attribute");
     	return ((JSONObject)ses.getAttribute("transactionObj")).toString();
     }
    
     
     @POST
     @Path("/submitSwiftMessage")
-    @Consumes(MediaType.TEXT_HTML)
-    @Produces(MediaType.TEXT_HTML)
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.TEXT_PLAIN)
     public String submitSwiftMessage(String data) throws JSONException
     {
+    	System.out.println("Swift message submitted");
     	JSONObject newObj = new JSONObject(data);
     	String messageCode = newObj.getString("messageCode");
     	int transactionId = newObj.getInt("transactionId");
@@ -162,7 +168,7 @@ public class MainController {
     	
     	Swift smessage = new Swift(messageCode,transactionId,sender,reciever,messageTxt,bankOperationCode,senderRef,interbankSettledAmount,instructedAmount,orderingCustomer,beneficiaryCustomer,senderCorrespondent,recieverCorrespondent,remitInfo,detailsOfCharge);
     	
-    	pay.checkAml(transactionId);
+    	pay.checkAML(transactionId);
     	
     	
     	if(pay.createSwiftMessage(smessage)) {
