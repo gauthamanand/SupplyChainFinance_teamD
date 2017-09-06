@@ -80,7 +80,7 @@ public class ConsumeRestService {
 			Client client = Client.create();
 
 			WebResource webResource = client
-			   .resource("http://localhost:808/payments/services/checkAML/?userid="+userid+"&country="+country);
+			   .resource("http://localhost:8089/payments/services/checkAML/?userid="+userid+"&country="+country);
 
 			ClientResponse response = webResource.accept("application/json")
 	                   .get(ClientResponse.class);
